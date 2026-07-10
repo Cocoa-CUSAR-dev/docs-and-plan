@@ -1,0 +1,9 @@
+{
+  "label": "Archive",
+  "position": 9,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "archive/index"
+  }
+}

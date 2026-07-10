@@ -1,0 +1,73 @@
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Field Data Submission Sequence</title>
+<desc>Sequence diagram of a farmer submitting field data through the entity-centric workflow: select entity, then execute action, validated by the Go backend and stored in PostgreSQL.</desc>
+<style>
+  .lifeline { stroke: #ccc; stroke-width: 1.5; }
+  .actor-box { fill: #f4f3f1; stroke: #ccc; }
+  .actor-text { font-family: sans-serif; font-size: 12.5px; font-weight: 600; fill: #222; text-anchor: middle; }
+  .msg { stroke: #555; stroke-width: 1.5; fill: none; marker-end: url(#arrow2); }
+  .msg-dash { stroke: #888; stroke-width: 1.4; stroke-dasharray: 5 3; fill: none; marker-end: url(#arrow2); }
+  .msg-label { font-family: sans-serif; font-size: 11px; fill: #444; }
+</style>
+<defs>
+  <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+  </marker>
+</defs>
+
+<rect width="900" height="520" fill="#ffffff"/>
+
+<g>
+  <rect x="20" y="20" width="140" height="36" rx="8" class="actor-box"/>
+  <text x="90" y="43" class="actor-text">Farmer</text>
+  <line x1="90" y1="56" x2="90" y2="480" class="lifeline"/>
+</g>
+<g>
+  <rect x="230" y="20" width="150" height="36" rx="8" class="actor-box"/>
+  <text x="305" y="43" class="actor-text">Mobile App</text>
+  <line x1="305" y1="56" x2="305" y2="480" class="lifeline"/>
+</g>
+<g>
+  <rect x="450" y="20" width="180" height="36" rx="8" class="actor-box"/>
+  <text x="540" y="43" class="actor-text">Go Backend</text>
+  <line x1="540" y1="56" x2="540" y2="480" class="lifeline"/>
+</g>
+<g>
+  <rect x="700" y="20" width="180" height="36" rx="8" class="actor-box"/>
+  <text x="790" y="43" class="actor-text">PostgreSQL</text>
+  <line x1="790" y1="56" x2="790" y2="480" class="lifeline"/>
+</g>
+
+<path class="msg" d="M90,90 L305,90"/>
+<text x="100" y="83" class="msg-label">1. Open app, select entity (Farm/Plot/Batch)</text>
+
+<path class="msg" d="M305,130 L540,130"/>
+<text x="315" y="123" class="msg-label">2. GET entity context + pending tasks</text>
+
+<path class="msg" d="M540,170 L790,170"/>
+<text x="550" y="163" class="msg-label">3. Query entity + task state</text>
+
+<path class="msg-dash" d="M790,205 L540,205"/>
+<text x="550" y="198" class="msg-label">4. Return entity tree &amp; tasks</text>
+
+<path class="msg-dash" d="M540,240 L305,240"/>
+<text x="315" y="233" class="msg-label">5. Render entity screen + form</text>
+
+<path class="msg" d="M90,280 L305,280"/>
+<text x="100" y="273" class="msg-label">6. Fill stepper form, submit action</text>
+
+<path class="msg" d="M305,320 L540,320"/>
+<text x="315" y="313" class="msg-label">7. POST validated payload (auth token)</text>
+
+<path class="msg" d="M540,360 L790,360"/>
+<text x="550" y="353" class="msg-label">8. INSERT snapshot record (versioned)</text>
+
+<path class="msg-dash" d="M790,395 L540,395"/>
+<text x="550" y="388" class="msg-label">9. Commit ack</text>
+
+<path class="msg-dash" d="M540,430 L305,430"/>
+<text x="315" y="423" class="msg-label">10. 200 OK</text>
+
+<path class="msg-dash" d="M305,465 L90,465"/>
+<text x="100" y="458" class="msg-label">11. Show confirmation</text>
+</svg>

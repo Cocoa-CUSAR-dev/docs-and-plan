@@ -1,0 +1,9 @@
+{
+  "label": "Components",
+  "position": 4,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "One page per deliverable: database, two backends, two clients."
+  }
+}

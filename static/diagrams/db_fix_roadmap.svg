@@ -1,0 +1,129 @@
+<svg viewBox="0 0 960 660" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="960" height="660" fill="#ffffff"/>
+  <text x="480" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1a2e">Cocoa Databank — DB Fix Roadmap</text>
+  <text x="480" y="60" text-anchor="middle" font-size="13" fill="#666">All fixes verified against schema.sql / seed.sql · none break existing data</text>
+
+  <!-- PHASE 1 -->
+  <rect x="20" y="80" width="300" height="490" rx="12" fill="#fdecea" stroke="#e74c3c" stroke-width="2"/>
+  <text x="170" y="108" text-anchor="middle" font-size="16" font-weight="700" fill="#c0392b">PHASE 1 — Fix today</text>
+  <text x="170" y="126" text-anchor="middle" font-size="11" fill="#c0392b">~1 hour total · zero code breakage</text>
+
+  <g font-size="12" fill="#333">
+    <circle cx="45" cy="155" r="12" fill="#e74c3c"/><text x="45" y="159" text-anchor="middle" fill="#fff" font-weight="700">1</text>
+    <text x="65" y="151" font-weight="600">Repair other.sql</text>
+    <text x="65" y="166">Trigger functions are truncated → repo</text>
+    <text x="65" y="180">can't rebuild DB. Copy from backup.sql.</text>
+
+    <circle cx="45" cy="215" r="12" fill="#e74c3c"/><text x="45" y="219" text-anchor="middle" fill="#fff" font-weight="700">2</text>
+    <text x="65" y="211" font-weight="600">FK: response → task</text>
+    <text x="65" y="226">task_log_id actually stores task_id.</text>
+    <text x="65" y="240">Add FK now, rename column later.</text>
+
+    <circle cx="45" cy="275" r="12" fill="#e74c3c"/><text x="45" y="279" text-anchor="middle" fill="#fff" font-weight="700">3</text>
+    <text x="65" y="271" font-weight="600">UNIQUE username</text>
+    <text x="65" y="286">+ NOT NULL username/password_hash.</text>
+    <text x="65" y="300">Duplicate logins currently possible.</text>
+
+    <circle cx="45" cy="335" r="12" fill="#e74c3c"/><text x="45" y="339" text-anchor="middle" fill="#fff" font-weight="700">4</text>
+    <text x="65" y="331" font-weight="600">FK geo_id → storage.geo (×3)</text>
+    <text x="65" y="346">farm / hub / processing_station point at</text>
+    <text x="65" y="360">geometry with no constraint.</text>
+
+    <circle cx="45" cy="395" r="12" fill="#e74c3c"/><text x="45" y="399" text-anchor="middle" fill="#fff" font-weight="700">5</text>
+    <text x="65" y="391" font-weight="600">farm_activity PK: varchar → uuid</text>
+    <text x="65" y="406">Only non-uuid PK in all 65 tables.</text>
+    <text x="65" y="420">Table is empty — now or never.</text>
+
+    <circle cx="45" cy="455" r="12" fill="#e74c3c"/><text x="45" y="459" text-anchor="middle" fill="#fff" font-weight="700">6</text>
+    <text x="65" y="451" font-weight="600">hub_collector → user_account FK</text>
+    <text x="65" y="466">Only actor table without login link;</text>
+    <text x="65" y="480">drop gen_random_uuid() default.</text>
+
+    <circle cx="45" cy="515" r="12" fill="#e74c3c"/><text x="45" y="519" text-anchor="middle" fill="#fff" font-weight="700">7</text>
+    <text x="65" y="511" font-weight="600">NOT NULL patches</text>
+    <text x="65" y="526">farm_economic_eval.farm_id,</text>
+    <text x="65" y="540">harvest.created_at / updated_at.</text>
+  </g>
+
+  <!-- PHASE 2 -->
+  <rect x="335" y="80" width="300" height="490" rx="12" fill="#fef5e7" stroke="#e67e22" stroke-width="2"/>
+  <text x="485" y="108" text-anchor="middle" font-size="16" font-weight="700" fill="#ca6f1e">PHASE 2 — This sprint</text>
+  <text x="485" y="126" text-anchor="middle" font-size="11" fill="#ca6f1e">~2 days · adds guard rails + speed</text>
+
+  <g font-size="12" fill="#333">
+    <circle cx="360" cy="155" r="12" fill="#e67e22"/><text x="360" y="159" text-anchor="middle" fill="#fff" font-weight="700">8</text>
+    <text x="380" y="151" font-weight="600">Adopt Flyway migrations</text>
+    <text x="380" y="166">Root cause of #1: no tooling means</text>
+    <text x="380" y="180">SQL files drift. Fits Gradle + jOOQ.</text>
+
+    <circle cx="360" cy="215" r="12" fill="#e67e22"/><text x="360" y="219" text-anchor="middle" fill="#fff" font-weight="700">9</text>
+    <text x="380" y="211" font-weight="600">UNIQUE pairs on junctions</text>
+    <text x="380" y="226">farmer_farm, plot_breed, harvest_</text>
+    <text x="380" y="240">collection… stop silent double-links.</text>
+
+    <circle cx="360" cy="275" r="12" fill="#e67e22"/><text x="360" y="279" text-anchor="middle" fill="#fff" font-weight="700">10</text>
+    <text x="380" y="271" font-weight="600">Indexes: hot FKs + GiST geom</text>
+    <text x="380" y="286">Zero secondary indexes today; every</text>
+    <text x="380" y="300">join is a sequential scan.</text>
+
+    <circle cx="360" cy="335" r="12" fill="#e67e22"/><text x="360" y="339" text-anchor="middle" fill="#fff" font-weight="700">11</text>
+    <text x="380" y="331" font-weight="600">One grade source of truth</text>
+    <text x="380" y="346">FK grade_code → grade_constant;</text>
+    <text x="380" y="360">drop empty cocoa_bean_grade table.</text>
+
+    <circle cx="360" cy="395" r="12" fill="#e67e22"/><text x="360" y="399" text-anchor="middle" fill="#fff" font-weight="700">12</text>
+    <text x="380" y="391" font-weight="600">CHECK constraints</text>
+    <text x="380" y="406">Status enums, quantity_kg ≥ 0,</text>
+    <text x="380" y="420">ends_at &gt; started_at.</text>
+
+    <circle cx="360" cy="455" r="12" fill="#e67e22"/><text x="360" y="459" text-anchor="middle" fill="#fff" font-weight="700">13</text>
+    <text x="380" y="451" font-weight="600">Decide dead objects</text>
+    <text x="380" y="466">tree_id column, 4 unused ref tables,</text>
+    <text x="380" y="480">missing batch_defect junction —</text>
+    <text x="380" y="494">implement or drop, per table.</text>
+  </g>
+
+  <!-- PHASE 3 -->
+  <rect x="650" y="80" width="290" height="490" rx="12" fill="#eafaf1" stroke="#27ae60" stroke-width="2"/>
+  <text x="795" y="108" text-anchor="middle" font-size="16" font-weight="700" fill="#1e8449">PHASE 3 — Keep &amp; document</text>
+  <text x="795" y="126" text-anchor="middle" font-size="11" fill="#1e8449">Defensible as-is · write it down, don't churn</text>
+
+  <g font-size="12" fill="#333">
+    <circle cx="675" cy="155" r="12" fill="#27ae60"/><text x="675" y="159" text-anchor="middle" fill="#fff" font-weight="700">14</text>
+    <text x="695" y="151" font-weight="600">Address triple (prov/dist/subdist)</text>
+    <text x="695" y="166">Keep for fast reads; add composite-FK</text>
+    <text x="695" y="180">guard so the 3 can't contradict.</text>
+
+    <circle cx="675" cy="215" r="12" fill="#27ae60"/><text x="675" y="219" text-anchor="middle" fill="#fff" font-weight="700">15</text>
+    <text x="695" y="211" font-weight="600">ref.*_constant mirror tables</text>
+    <text x="695" y="226">Keep (triggers sync them) or swap</text>
+    <text x="695" y="240">for views. Document the exception.</text>
+
+    <circle cx="675" cy="275" r="12" fill="#27ae60"/><text x="675" y="279" text-anchor="middle" fill="#fff" font-weight="700">16</text>
+    <text x="695" y="271" font-weight="600">Polymorphic storage.file</text>
+    <text x="695" y="286">Standard pattern — keep. Just add</text>
+    <text x="695" y="300">(table_name, ref_id) index + created_at.</text>
+
+    <circle cx="675" cy="335" r="12" fill="#27ae60"/><text x="675" y="339" text-anchor="middle" fill="#fff" font-weight="700">17</text>
+    <text x="695" y="331" font-weight="600">NO ACTION on deletes</text>
+    <text x="695" y="346">Correct for traceability data — keep.</text>
+    <text x="695" y="360">CASCADE only on detail/junction rows.</text>
+
+    <circle cx="675" cy="395" r="12" fill="#27ae60"/><text x="675" y="399" text-anchor="middle" fill="#fff" font-weight="700">18</text>
+    <text x="695" y="391" font-weight="600">timestamp (no tz)</text>
+    <text x="695" y="406">Fine for Thailand-only data. Use</text>
+    <text x="695" y="420">timestamptz for new tables only.</text>
+
+    <circle cx="675" cy="455" r="12" fill="#27ae60"/><text x="675" y="459" text-anchor="middle" fill="#fff" font-weight="700">19</text>
+    <text x="695" y="451" font-weight="600">batch.origin free text</text>
+    <text x="695" y="466">Rename to origin_note; origin is</text>
+    <text x="695" y="480">derivable via harvest links.</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="20" y="585" width="920" height="55" rx="10" fill="#f4f6f7" stroke="#d5d8dc"/>
+  <text x="40" y="608" font-size="12.5" font-weight="700" fill="#1a1a2e">Key message:</text>
+  <text x="40" y="626" font-size="12.5" fill="#333">Design is solid (65 tables, 80 FKs, clean traceability chain, zero data corruption found). Gaps are guard rails, not architecture:</text>
+  <text x="815" y="608" font-size="12.5" fill="#333">no uniques, no indexes,</text>
+  <text x="815" y="626" font-size="12.5" fill="#333">one broken setup script.</text>
+</svg>

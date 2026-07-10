@@ -1,0 +1,89 @@
+<svg viewBox="0 0 980 720" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Cocoa Databank System Architecture — with Phase I/II refinements</title>
+<desc>Existing architecture in neutral tones, with two new refinements shown in red: Phase I LINE OA form entry with LLM extraction, and Phase II Computer Vision disease detection plus a Knowledge Base module.</desc>
+<style>
+  .box { fill: #f4f3f1; stroke: #ccc; stroke-width: 1.5; }
+  .box-accent { fill: #e8e2d8; stroke: #b08d57; stroke-width: 1.5; }
+  .box-db { fill: #ddd3c2; stroke: #96784a; stroke-width: 1.5; }
+  .box-new { fill: #fbe3e1; stroke: #c0392b; stroke-width: 1.8; }
+  .title { font-family: sans-serif; font-size: 15px; font-weight: 600; fill: #222; }
+  .title-new { font-family: sans-serif; font-size: 15px; font-weight: 700; fill: #a02c20; }
+  .sub { font-family: sans-serif; font-size: 11.5px; fill: #555; }
+  .sub-new { font-family: sans-serif; font-size: 11.5px; fill: #a02c20; }
+  .label { font-family: sans-serif; font-size: 11px; fill: #777; }
+  .arrow { stroke: #888; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+  .arrow-new { stroke: #c0392b; stroke-width: 1.8; fill: none; marker-end: url(#arrowRed); }
+  .group-label { font-family: sans-serif; font-size: 12px; font-weight: 600; fill: #666; }
+  .phase-tag { font-family: sans-serif; font-size: 10px; font-weight: 700; fill: #ffffff; }
+</style>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+  </marker>
+  <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+  </marker>
+</defs>
+
+<rect width="980" height="720" fill="#ffffff"/>
+<rect x="20" y="20" width="940" height="680" rx="14" fill="none" stroke="#ddd" stroke-dasharray="4 3"/>
+<text x="40" y="42" class="group-label">AWS infrastructure — 3 VM instances, stateless services auto-scale, DB replicated</text>
+
+<rect x="60" y="70" width="230" height="80" rx="10" class="box-new"/>
+<rect x="60" y="70" width="86" height="18" rx="4" fill="#c0392b"/>
+<text x="72" y="83" class="phase-tag">PHASE I</text>
+<text x="80" y="108" class="title-new">LINE OA Form Entry</text>
+<text x="80" y="124" class="sub-new">+ LLM answer extraction</text>
+<text x="80" y="140" class="label">Alt. channel for farmers</text>
+
+<rect x="370" y="70" width="230" height="80" rx="10" class="box-accent"/>
+<text x="390" y="98" class="title">Mobile Application</text>
+<text x="390" y="116" class="sub">Flutter (Dart)</text>
+<text x="390" y="132" class="label">Farmers · Processors · Hubs</text>
+
+<rect x="690" y="70" width="230" height="80" rx="10" class="box-accent"/>
+<text x="710" y="98" class="title">Web Researcher Platform</text>
+<text x="710" y="116" class="sub">Next.js (TypeScript)</text>
+<text x="710" y="132" class="label">Researchers · Admins</text>
+
+<rect x="60" y="230" width="230" height="80" rx="10" class="box-new"/>
+<rect x="60" y="230" width="90" height="18" rx="4" fill="#c0392b"/>
+<text x="72" y="243" class="phase-tag">PHASE II</text>
+<text x="80" y="268" class="title-new">Computer Vision</text>
+<text x="80" y="284" class="sub-new">Cocoa disease detection</text>
+<text x="80" y="300" class="label">From mobile camera capture</text>
+
+<rect x="370" y="230" width="230" height="90" rx="10" class="box"/>
+<text x="390" y="258" class="title">Mobile Backend</text>
+<text x="390" y="276" class="sub">Go (Golang)</text>
+<text x="390" y="292" class="label">Auth · validation · business logic</text>
+
+<rect x="690" y="230" width="230" height="90" rx="10" class="box"/>
+<text x="710" y="258" class="title">Web Backend</text>
+<text x="710" y="276" class="sub">Kotlin + Spring Boot</text>
+<text x="710" y="292" class="label">Query abstraction · exports</text>
+
+<rect x="370" y="410" width="260" height="90" rx="10" class="box-db"/>
+<text x="395" y="440" class="title">Central Database</text>
+<text x="395" y="458" class="sub">PostgreSQL (async replication)</text>
+<text x="395" y="474" class="label">Farm → Plot → Tree → Batch history</text>
+
+<rect x="690" y="410" width="230" height="90" rx="10" class="box-new"/>
+<rect x="690" y="410" width="90" height="18" rx="4" fill="#c0392b"/>
+<text x="702" y="423" class="phase-tag">PHASE II</text>
+<text x="710" y="448" class="title-new">Knowledge Base</text>
+<text x="710" y="464" class="sub-new">Curated agri-domain data store</text>
+<text x="710" y="480" class="label">Foundation for future use cases</text>
+
+<path class="arrow" d="M485,150 L485,230"/>
+<path class="arrow" d="M805,150 L805,230"/>
+<path class="arrow" d="M540,320 C560,360 500,380 500,410"/>
+<path class="arrow" d="M770,320 C770,360 620,380 560,410"/>
+
+<path class="arrow-new" d="M175,150 C175,190 300,190 370,270"/>
+<path class="arrow-new" d="M175,310 L370,275"/>
+<path class="arrow-new" d="M690,455 L630,455"/>
+<path class="arrow-new" d="M805,320 L805,410"/>
+
+<text x="40" y="670" class="label">Red = new work added after refinement (Phase I LINE OA/LLM intake, Phase II Computer Vision + Knowledge Base)</text>
+</svg>

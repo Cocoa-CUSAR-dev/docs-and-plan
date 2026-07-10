@@ -1,0 +1,26 @@
+/**
+ * Global styles. Infima variables tuned to a cocoa-brown palette.
+ */
+
+:root {
+  --ifm-color-primary: #7b4b2a;
+  --ifm-color-primary-dark: #6f4426;
+  --ifm-color-primary-darker: #684024;
+  --ifm-color-primary-darkest: #56351d;
+  --ifm-color-primary-light: #87522e;
+  --ifm-color-primary-lighter: #8e5630;
+  --ifm-color-primary-lightest: #a06238;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #d4a373;
+  --ifm-color-primary-dark: #cd9560;
+  --ifm-color-primary-darker: #c98e56;
+  --ifm-color-primary-darkest: #b47840;
+  --ifm-color-primary-light: #dbb186;
+  --ifm-color-primary-lighter: #dfb890;
+  --ifm-color-primary-lightest: #eaccae;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}

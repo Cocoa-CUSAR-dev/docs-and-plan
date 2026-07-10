@@ -1,0 +1,51 @@
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Entity-Centric Data Hierarchy</title>
+<desc>Spatial entity hierarchy used by the entity-centric workflow: Hub contains Processing Stations and Farms, Farms contain Plots, Plots contain Trees and are tracked over seasonal snapshots that roll up into Batches.</desc>
+<style>
+  .box { fill: #f4f3f1; stroke: #ccc; stroke-width: 1.5; }
+  .box-accent { fill: #e8e2d8; stroke: #b08d57; stroke-width: 1.5; }
+  .title { font-family: sans-serif; font-size: 14px; font-weight: 600; fill: #222; text-anchor: middle; }
+  .sub { font-family: sans-serif; font-size: 10.5px; fill: #777; text-anchor: middle; }
+  .arrow { stroke: #888; stroke-width: 1.5; fill: none; marker-end: url(#a3); }
+  .note { font-family: sans-serif; font-size: 11px; fill: #555; }
+</style>
+<defs>
+  <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+  </marker>
+</defs>
+
+<rect width="900" height="480" fill="#ffffff"/>
+
+<rect x="370" y="20" width="160" height="60" rx="10" class="box-accent"/>
+<text x="450" y="46" class="title">Hub</text>
+<text x="450" y="64" class="sub">collection point</text>
+
+<rect x="150" y="140" width="160" height="60" rx="10" class="box"/>
+<text x="230" y="166" class="title">Farm</text>
+<text x="230" y="184" class="sub">owned by farmer</text>
+
+<rect x="590" y="140" width="200" height="60" rx="10" class="box"/>
+<text x="690" y="166" class="title">Processing Station</text>
+<text x="690" y="184" class="sub">post-harvest processing</text>
+
+<rect x="150" y="260" width="160" height="60" rx="10" class="box"/>
+<text x="230" y="286" class="title">Plot</text>
+<text x="230" y="304" class="sub">sub-area of a farm</text>
+
+<rect x="590" y="260" width="200" height="60" rx="10" class="box"/>
+<text x="690" y="286" class="title">Batch</text>
+<text x="690" y="304" class="sub">processed lot, traceable to plots</text>
+
+<rect x="150" y="380" width="160" height="60" rx="10" class="box"/>
+<text x="230" y="406" class="title">Tree (micro-level)</text>
+<text x="230" y="424" class="sub">individual asset unit</text>
+
+<path class="arrow" d="M420,80 L280,140"/>
+<path class="arrow" d="M480,80 L680,140"/>
+<path class="arrow" d="M230,200 L230,260"/>
+<path class="arrow" d="M230,320 L230,380"/>
+<path class="arrow" d="M310,290 C420,290 500,290 590,290"/>
+
+<text x="330" y="450" class="note">Each level keeps versioned seasonal snapshots (e.g. 100 → 60 trees, year 1 → 2) for carbon-credit auditing</text>
+</svg>

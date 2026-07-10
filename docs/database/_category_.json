@@ -1,0 +1,9 @@
+{
+  "label": "Database Deep Dive",
+  "position": 5,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "The full database review (2026-07-08), the leave-vs-fix decision log, and the fix roadmap."
+  }
+}
