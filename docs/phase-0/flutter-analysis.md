@@ -836,3 +836,9 @@ The application successfully addresses the unique challenges of agricultural sup
 **Analysis Date:** July 10, 2026  
 **Analyzer:** Cascade AI Assistant  
 **Version:** 1.0.0+1
+
+---
+
+## Weak points fed into the register
+
+This analysis surfaced [APP-1 through APP-6 in the Weak-Point Register](/docs/phase-0#5-flutter-mobile-app) — most importantly the hardcoded LAN backend URL over plain HTTP (APP-1/APP-2) and the client-bundled form schema (APP-4).

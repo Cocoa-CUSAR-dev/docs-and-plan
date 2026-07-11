@@ -36,7 +36,13 @@ Full details: [Database component page](/docs/components/database).
 
 :::danger[Do NOT run other.sql as-is]
 
-`other.sql` (the `ref.*_constant` sync triggers) is **truncated and not valid SQL** — the full trigger functions only exist in `backup.sql` at the transfer-folder root. Restore them from there first. See [Critical Issue C1](/docs/critical-issues#c1).
+`other.sql` (the `ref.*_constant` sync triggers) is **truncated and not valid SQL** — the full trigger functions only exist in `backup.sql`, which sits at the CAPSTONE root **next to** (not inside) the transfer folder. Restore them from there first. See [Critical Issue C1](/docs/critical-issues#c1).
+
+Extra trap: `backup.sql` is saved as **UTF-16** — convert before use or `psql`/grep will choke on it:
+
+```bash
+iconv -f UTF-16LE -t UTF-8 backup.sql > backup_utf8.sql
+```
 
 :::
 

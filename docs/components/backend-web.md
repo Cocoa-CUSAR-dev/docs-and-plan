@@ -92,3 +92,9 @@ With the server running (paths are under the `/api/v1` context path):
 
 - `generateJooq` reads the live database — schema drift between environments changes your generated code. This is one reason the [migration-tool issue (O1)](/docs/critical-issues#o1) matters.
 - `farm_activity.farm_activity_id` is the single `varchar` PK in the whole DB, so jOOQ types it `String` while everything else is `UUID` ([T1](/docs/database/fix-decisions#t1)).
+
+## See also
+
+- [API Reference](/docs/components/backend-api-reference) — every endpoint with its required authority
+- [Weak-Point Register — BE items](/docs/phase-0#2-kotlin-web-backend-researcher-side) — including the three P5 security findings
+- [Researcher Web App](/docs/components/researcher-web) — the client this server serves

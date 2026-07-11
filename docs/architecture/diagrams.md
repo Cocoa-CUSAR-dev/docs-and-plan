@@ -37,3 +37,7 @@ Visual companion to the [Fix Decisions](/docs/database/fix-decisions) and [Roadm
 Why the browser never calls the backend directly (see [Researcher Web App](/docs/components/researcher-web)).
 
 ![Request handling flow](/diagrams/request_flow_mermaid.png)
+
+## Go server sequence diagrams
+
+Login, protected-API, and form-submission sequences plus the component/schema map live on the [Go Server Walkthrough](/docs/phase-0/go-server-walkthrough) page.

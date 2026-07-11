@@ -14,7 +14,7 @@ flowchart TB
     end
 
     subgraph backends [Backends]
-        GO[Go Server<br/>Clean Architecture, Docker]
+        GO[Go Server<br/>Gin + GORM, Docker, :8080]
         KOTLIN[Kotlin Spring Boot<br/>jOOQ, JWT]
     end
 

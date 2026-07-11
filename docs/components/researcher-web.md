@@ -39,7 +39,7 @@ pnpm i
 pnpm dev -p <port>
 ```
 
-Quality check: `pnpm qc` (ESLint + TypeScript). Tests: `npx playwright test tests/<test-file>` — existing suites cover login, landing, form, dashboard, and map pages.
+Quality check: `pnpm qc` — runs three gates in order: TypeScript (`tsc --noEmit`), ESLint, and Prettier. Tests: `npx playwright test tests/<test-file>` — five suites exist: login, landing, form, map, dashboard.
 
 ## Source layout (`src/`)
 
@@ -82,3 +82,9 @@ The team's [Researcher-Side Code Quality Audit](/docs/phase-0/researcher-audit) 
 - Complex objects can't be passed as props to server components: use a client-component `ThemeRegistry` instead of passing a theme object to `ThemeProvider` in the root layout.
 - Passing MUI components via a `component` prop can error — see [MUI's Next.js 16 note](https://v7.mui.com/material-ui/integrations/nextjs/#next-js-v16-client-component-restriction).
 - MUI v9 works but has TS Server / `tsconfig.json` init problems in VS Code — upgrade carefully, be ready to roll back.
+
+## See also
+
+- [Web Backend](/docs/components/backend-web) — the server this app proxies to, and its [API Reference](/docs/components/backend-api-reference)
+- [Weak-Point Register — FE items](/docs/phase-0#3-researcher-web-app-nextjs)
+- [Researcher-Side Code Audit](/docs/phase-0/researcher-audit) — all 23 frontend findings

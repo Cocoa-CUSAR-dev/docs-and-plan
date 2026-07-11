@@ -48,7 +48,7 @@ Everything was handed over in the `cocoa_project_transfer/` folder. Map of what'
 |---|---|---|
 | `database/` | `schema.sql`, `seed.sql`, `other.sql` (triggers) | [Database](/docs/components/database) |
 | `backend-web-transfer-2026-06-16/` | Kotlin + Spring Boot + jOOQ web backend | [Web Backend](/docs/components/backend-web) |
-| `go-server-transfer-2026-06-16/` | Go mobile backend (Clean Architecture) | [Go Server](/docs/components/go-server) |
+| `go-server-transfer-2026-06-16/` | Go mobile backend (Gin + GORM) | [Go Server](/docs/components/go-server) |
 | `researcher-web-app-transfer-2026-05-16/` | Next.js 16 researcher web app | [Researcher Web App](/docs/components/researcher-web) |
 | `cocoa-app-poc-0.2/` | Flutter mobile app (offline-first) | [Mobile App](/docs/components/mobile-app) |
 | `DB_REVIEW.md`, `DB_FIX_DECISIONS.md` | Database review + fix decisions (2026-07-08) | [Database Review](/docs/database/db-review) |

@@ -20,32 +20,35 @@ The original README didn't name the frameworks. The team's [Go Server Walkthroug
 
 ## Project structure
 
+*(Verified against the repo — the original README claimed a `services/` layer that doesn't exist; business logic lives inside the handlers.)*
+
 ```
 cmd/
-└── main.go                    # entry point + route definitions
+└── main.go                    # entry point + all route definitions (r.Run(":8080"))
 internal/
-├── database/                  # connection & DB primitives
-├── handlers/                  # API entry points
+├── database/
+│   └── postgres.go            # GORM connection + pool from .env
+├── handlers/                  # API entry points AND business logic
 │   ├── agriculture_handler.go
 │   ├── auth_handler.go
 │   ├── collection_handler.go
 │   ├── form_handler.go        # dynamic forms: tasks, submissions, dissection
 │   ├── processing_handler.go
 │   └── ref_handler.go         # lookup/dropdown data
-├── middleware/                # token checks, logging
-├── models/                    # auth, farmer, farm, plot, batch, harvest, hub, processing_station, ref
-└── services/                  # business logic
-env                            # environment variables
+├── middleware/
+│   └── auth_middleware.go     # JWT cookie validation
+└── models/                    # GORM structs: auth, farmer, farm, plot, batch, harvest, hub, processing_station, ref
+.env                           # environment variables
 ```
 
-## Architecture rules (keep these)
+## Architecture notes
 
-- Handlers (transport), services (business logic), and models (schemas) stay decoupled.
-- Database operations are isolated in `internal/database/` so the schema can evolve without breaking endpoints.
+- There is **no service layer** — handlers do transport *and* business logic. The README's "Clean Architecture" claim describes the intent, not the code.
+- Database connection setup is isolated in `internal/database/`, but queries themselves live in the handlers via GORM.
 
 ## Run
 
-Prerequisite: Docker + Docker Compose, `env` file configured.
+Prerequisite: Docker + Docker Compose (`Dockerfile` and `docker-compose.yml` are in the repo), `.env` file configured.
 
 ```bash
 docker compose up -d --build
@@ -64,3 +67,9 @@ Full endpoint list and sequence diagrams: [Go Server Walkthrough](/docs/phase-0/
 - The form-dissection logic in `form_handler.go` writes to domain tables **by convention, not FK enforcement** in some spots — notably `form.response.task_log_id`, which actually holds a `task_id` and has no FK ([C2](/docs/critical-issues#c2)). Be careful when extending submission handling.
 - Reference dropdown consistency depends on the `ref.*_constant` mirror tables, which are trigger-maintained — and those triggers are the ones broken in `other.sql` ([C1](/docs/critical-issues#c1)).
 - GORM models in `internal/models/` are a **second, independent definition of the schema** — after any DB change, update them by hand and check they still match what jOOQ generates on the Kotlin side ([GO-1](/docs/phase-0#4-go-mobile-backend)).
+
+## See also
+
+- [Go Server Walkthrough](/docs/phase-0/go-server-walkthrough) — sequence diagrams, file-by-file guide, full API list
+- [Weak-Point Register — GO items](/docs/phase-0#4-go-mobile-backend)
+- [Mobile App](/docs/components/mobile-app) — the client this server serves

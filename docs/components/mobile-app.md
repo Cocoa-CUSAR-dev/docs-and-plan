@@ -44,14 +44,16 @@ Built to serve multiple cooperatives: logos, colors, and API endpoints come from
 
 ## Code structure (`lib/`)
 
+*(Verified against the repo — the original README's `blocs/` and `screens/` names were wrong.)*
+
 | Path | Purpose |
 |---|---|
 | `main.dart` / `route.dart` | Entry point and routing |
-| `blocs/` | BLoC state management (business logic lives here, not in UI) |
+| `bloc/` | BLoC state management, one folder per feature (login, farm, plot, hub, batch, task, dynamic, …) |
 | `models/` | Data classes + JSON (de)serialization |
-| `screens/` | Full pages |
-| `widgets/` | Reusable components |
-| `services/` | HTTP, GPS, files — including `service_provider.dart` |
+| `widgets/pages/` | Full-screen pages (login, home, registrations, dynamic forms, …) |
+| `widgets/components/` | Reusable form inputs (`form_input`, `dropdown_input`, `gis_input`, `upload_input`, …) and scaffolds |
+| `services/` | HTTP, GPS, files — one service per domain, plus `service_provider.dart` |
 
 ## Run & build
 
@@ -67,3 +69,10 @@ flutter build ipa                # iOS (requires macOS + Xcode)
 ## Performance test artifacts
 
 A recorded performance test (screen recording, `cpu.json`, `memory.csv`, `network.json`) is archived at `cocoa_project_transfer/Flutter Performance Test/`.
+
+## See also
+
+- [Flutter App Technical Analysis](/docs/phase-0/flutter-analysis) — full architecture writeup (BLoC layers, offline sync, dynamic forms)
+- [Weak-Point Register — APP items](/docs/phase-0#5-flutter-mobile-app) — hardcoded LAN URL, plain HTTP, unencrypted storage
+- [Go Server](/docs/components/go-server) — the backend this app talks to
+- [User Manuals (Thai)](/docs/archive/manuals) — per-role guides for v0.2

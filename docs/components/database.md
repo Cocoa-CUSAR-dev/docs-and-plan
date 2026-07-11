@@ -44,7 +44,7 @@ The original README claims "higher normal forms". The [DB review (D5)](/docs/dat
    psql "postgresql://..." -f seed.sql
    ```
 
-4. **Triggers:** restore the full trigger functions from `backup.sql` (root of the transfer folder) — do not run the broken `other.sql`.
+4. **Triggers:** restore the full trigger functions from `backup.sql` (at the CAPSTONE root, next to the transfer folder) — do not run the broken `other.sql`. Note `backup.sql` is **UTF-16 encoded**; convert first: `iconv -f UTF-16LE -t UTF-8 backup.sql > backup_utf8.sql`.
 
 ## Admin & permission recipes
 
@@ -68,6 +68,10 @@ The live DB uses `admin`, `researcher`, `farmer`, `hub_collector`, `processor`. 
 :::
 
 Passwords are bcrypt-hashed by the application — never store plain text.
+
+:::note[Two similar-looking columns]
+`user_account` has both `is_requires_password_reset` (**must** reset on next login — the one to set here) and `is_password_reset` (**has completed** a reset). Both are real and used by the backend; don't mix them up.
+:::
 
 ### Grant / revoke a permission for a role
 
@@ -100,8 +104,9 @@ WHERE role_id       = (SELECT role_id FROM auth.role WHERE role_name = 'research
 4. Regenerate jOOQ in the Kotlin backend (`./gradlew generateJooq`) and check the Go models.
 5. Log the change in the [Project Log](/log).
 
-## Deep dives
+## See also
 
-- [Database Review](/docs/database/db-review) — full findings: good points, bad points, conflicts.
-- [Fix Decisions](/docs/database/fix-decisions) — leave-vs-fix analysis per finding.
-- [Critical Issues](/docs/critical-issues) — the live tracker.
+- [Database Review](/docs/database/db-review) — full findings: good points, bad points, conflicts
+- [Fix Decisions](/docs/database/fix-decisions) — leave-vs-fix analysis per finding
+- [Critical Issues](/docs/critical-issues) — the live tracker
+- [Weak-Point Register — DB items](/docs/phase-0#1-database)

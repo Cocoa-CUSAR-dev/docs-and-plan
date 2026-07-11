@@ -78,7 +78,8 @@ From the [Go Server Walkthrough](/docs/phase-0/go-server-walkthrough) and code r
 | GO-2 | JWT carries only `user_id` — no roles; endpoints rely on profile-existence rather than role checks | Authorization model diverges from the Kotlin side's permission system; auditing access is impossible | 🟠 | ⏳ Undecided |
 | GO-3 | JWT delivered as a cookie to a mobile app; no refresh-token flow | Awkward on mobile HTTP clients; long-lived static tokens are the likely workaround → security risk | 🟠 | ⏳ Undecided |
 | GO-4 | No automated tests (only `go fmt` / `go vet`) | Same refactoring-safety problem | 🟠 | ⏳ Undecided |
-| GO-5 | Port 8080 and config via bare `env` file; no health-check endpoint beyond `/public/test` | Deployment/monitoring readiness for Phase I | 🟡 | ⏳ Undecided |
+| GO-5 | Port 8080 hardcoded in `main.go` (`r.Run(":8080")`); no health-check endpoint beyond `/public/test` | Deployment/monitoring readiness for Phase I | 🟡 | ⏳ Undecided |
+| GO-7 | No service layer despite the README's "Clean Architecture" claim — business logic sits inside the handlers | Handler files grow unboundedly; logic can't be reused by a future ingestion channel (Phase II) | 🟡 | ⏳ Undecided |
 | GO-6 | List endpoints (`/harvests`, `/batches`, `/tasks`) return unpaginated results | Same growth problem as BE-9 | 🟡 | ⏳ Undecided |
 
 ## 5. Flutter Mobile App

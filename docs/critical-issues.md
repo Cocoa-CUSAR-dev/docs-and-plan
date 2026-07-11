@@ -46,7 +46,7 @@ Highest-severity items outside the database — full detail in the [audit](/docs
 
 ## C1 — `other.sql` is broken; the repo cannot rebuild the database {#c1}
 
-All four trigger functions in `database/other.sql` are truncated mid-body — the file is **not valid SQL**. The complete versions exist only in `backup.sql` (root of the transfer folder). Anyone doing first-time setup either gets a syntax error or skips the triggers, after which the `ref.*_constant` mirror tables silently stop syncing.
+All four trigger functions in `database/other.sql` are truncated mid-body (bodies stop after the first `INSERT` branch — no `ELSIF`/`END IF`/`RETURN NEW`) — the file is **not valid SQL**. The complete versions exist only in `backup.sql` at the CAPSTONE root, next to the transfer folder — and that file is **UTF-16 encoded**, so convert it (`iconv -f UTF-16LE -t UTF-8`) before copying from it. Anyone doing first-time setup either gets a syntax error or skips the triggers, after which the `ref.*_constant` mirror tables silently stop syncing.
 
 **Fix:** copy the full function bodies from `backup.sql` into `other.sql`. Zero risk — the live DB already has the full functions. Details: [Fix Decisions C1](/docs/database/fix-decisions#c1).
 
