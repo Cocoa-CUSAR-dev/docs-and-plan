@@ -121,5 +121,5 @@ From the [Flutter App Technical Analysis](/docs/phase-0/flutter-analysis).
 **Conclusion for Phase 0:** the system *can* be made scalable without a rewrite — the domain model, multi-schema design, BFF pattern, and dynamic-form engine are sound foundations. But the 🔧 items above (security holes, integrity constraints, environment/config hygiene, CI) are prerequisites, not nice-to-haves, and belong at the start of Phase I. The 🏗️ big architectural question to resolve as a team is **GO-1/X-3**: whether to consolidate the two backends' data access (shared contract, or one backend owning writes) before adding the Phase II ingestion channel.
 
 :::tip[How to use this register]
-When the team decides an item's fate, change its Decision cell (🔧 / 📌 / ✅), and if it's non-obvious, write a short [Project Log](/log) entry with the reasoning. Items decided "fix" should appear in the [Roadmap](/docs/plans/roadmap) phase plan.
+When the team decides an item's fate, change its Decision cell (🔧 / 📌 / ✅), and if it's non-obvious, write a short [Project Log](/log) entry with the reasoning. Items decided "fix" are sized and ordered in the **[Fix Dependency Map & Sprint Sizing](/docs/plans/fix-dependencies)** page.
 :::

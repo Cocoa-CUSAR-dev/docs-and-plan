@@ -8,7 +8,7 @@ title: Critical Issues
 
 The known critical points that must be fixed, in priority order. **This page is the living tracker** — when you fix one, change its Status here, note the date, and write a short entry in the [Project Log](/log). The full technical background stays frozen in the [Database Review](/docs/database/db-review) and [Fix Decisions](/docs/database/fix-decisions).
 
-For the complete cross-layer inventory (mobile app, both backends, infrastructure) with fix-or-accept decisions, see the [Phase 0 Weak-Point Register](/docs/phase-0) — this page tracks the **database** items in detail, plus the application-layer criticals below.
+For the complete cross-layer inventory (mobile app, both backends, infrastructure) with fix-or-accept decisions, see the [Phase 0 Weak-Point Register](/docs/phase-0) — this page tracks the **database** items in detail, plus the application-layer criticals below. Story-point sizes and the order to do them in: [Fix Dependency Map](/docs/plans/fix-dependencies).
 
 Status values: 🟥 **Open** · 🟨 **In progress** · ✅ **Fixed** · 📌 **Accepted** (deliberately not fixing — documented decision)
 

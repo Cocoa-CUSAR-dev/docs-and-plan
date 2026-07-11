@@ -25,7 +25,7 @@ Analyze the inherited system: can it scale, and can it support Phases II–III? 
 
 Refactor the existing system and database for efficiency, stability, and maintainability, and deploy it for real users — a stable foundation for the later technology phases.
 
-Work list (driven by the register's 🔧 items):
+Work list (driven by the register's 🔧 items — **sized, dependency-ordered, and cut into sprints on the [Fix Dependency Map](/docs/plans/fix-dependencies)**):
 
 1. **Database integrity batch** — restore `other.sql`, response→task FK, UNIQUE constraints, geo FKs, hot-path + GiST indexes ([DB-1…DB-5](/docs/phase-0#1-database)); adopt **Flyway** ([DB-6](/docs/critical-issues#o1)).
 2. **Security before exposure** — `Secure` cookie flag, authorization on task responses and raw-data export, JWT error handling, TLS everywhere, mobile config/secure storage ([BE-1…BE-3, BE-8, APP-1, APP-2](/docs/phase-0)).
