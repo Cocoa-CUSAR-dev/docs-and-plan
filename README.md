@@ -1,6 +1,26 @@
 # Cocoa Databank Docs
 
-Team documentation site for the **Databank for Cocoa Supply Chain (Is Thai Cacao)** project, built with [Docusaurus](https://docusaurus.io/). It consolidates everything from `../cocoa_project_transfer/` into a browsable knowledge base.
+Team documentation site for the **Databank for Cocoa Supply Chain (Is Thai Cacao)** project, built with [Docusaurus](https://docusaurus.io/). The single source of truth for architecture, the Phase 0 weak-point register, the fix plan, and the project log.
+
+## The project (2026–2027 thesis)
+
+A 10-month, two-phase modernization of the Cocoa Supply Chain Databank:
+
+- **Phase I (mandatory, by Dec 2026):** add a **LINE OA AI chatbot** as a new farmer data-entry channel, modernize the farmer app, add SSO (LINE ↔ web), reminders, and web submission history. The existing form system stays in place — the chatbot is additive, **no data migration**. Tech-debt refactoring runs alongside every sprint.
+- **Phase II (gated, Dec 2026 – Apr 2027):** Knowledge Base + Computer Vision cocoa-disease detection.
+
+### Sibling repos (Cocoa-CUSAR-dev org)
+
+| Repo | What it is |
+|---|---|
+| `cocoa-database` | Shared PostgreSQL schema/seed (the integration contract) |
+| `cocoa-web-backend` | Kotlin + Spring Boot + jOOQ — researcher-side backend |
+| `cocoa-mobile-backend` | Go + Gin + GORM — farmer-side backend |
+| `cocoa-researcher-web` | Next.js researcher web portal |
+| `cocoa-mobile-app` | Flutter farmer app (modernized in Phase I) |
+| `cocoa-docs` | This site |
+
+Start reading at `docs/intro.md` → `docs/phase-0/` (weak-point register) → `docs/plans/` (roadmap + sprint-sized fix map).
 
 ## Run locally
 

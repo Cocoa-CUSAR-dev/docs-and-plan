@@ -1,0 +1,79 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="'Leelawadee UI','Noto Sans Thai',Tahoma,sans-serif" role="img">
+<title>กลยุทธ์การแก้ไข: แก้ไปพร้อมงาน ไม่ใช่แยก Phase Refactor</title>
+<desc>แผนภาพสองช่องเปรียบเทียบสิ่งที่ต้องแก้ก่อนเริ่ม (รากฐาน) กับสิ่งที่แก้ไปพร้อมกับแต่ละ Epic ตลอด Phase 1 พร้อมไทม์ไลน์แสดงว่ากระจายอยู่ทุก Sprint</desc>
+
+<rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/>
+
+<text x="640" y="60" font-size="26" font-weight="700" fill="#2C2C2A" text-anchor="middle">กลยุทธ์: แก้ไปพร้อมงาน ไม่ใช่แยก Phase Refactor</text>
+<text x="640" y="92" font-size="16" fill="#5F5E5A" text-anchor="middle">เรารู้แล้วว่ามีบั๊กอะไร ขึ้นกับอะไรก่อน-หลัง จึงจัดคิวใส่แต่ละ Sprint ได้</text>
+
+<line x1="640" y1="140" x2="640" y2="480" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+
+<!-- LEFT lane: fix first -->
+<rect x="60" y="140" width="560" height="340" rx="16" fill="#FCEBEB" stroke="#E24B4A" stroke-width="1.5"/>
+<rect x="90" y="165" width="150" height="34" rx="17" fill="#E24B4A"/>
+<text x="165" y="182" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">แก้ก่อนเริ่ม</text>
+<text x="90" y="225" font-size="13" fill="#791F1F">รากฐานที่ต้องมั่นคงก่อน · Sprint 1-2 · ~10 story points</text>
+
+<rect x="90" y="250" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#E24B4A" stroke-width="0.75"/>
+<text x="106" y="276" font-size="14" fill="#2C2C2A">กู้คืนสคริปต์สร้างฐานข้อมูล</text>
+<text x="580" y="276" font-size="13" font-weight="600" fill="#A32D2D" text-anchor="end">1 pt</text>
+
+<rect x="90" y="306" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#E24B4A" stroke-width="0.75"/>
+<text x="106" y="332" font-size="14" fill="#2C2C2A">ปิดช่องโหว่สิทธิ์เข้าถึงข้อมูล</text>
+<text x="580" y="332" font-size="13" font-weight="600" fill="#A32D2D" text-anchor="end">5 pt</text>
+
+<rect x="90" y="362" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#E24B4A" stroke-width="0.75"/>
+<text x="106" y="388" font-size="14" fill="#2C2C2A">ตั้งค่า URL Backend ผ่าน config</text>
+<text x="580" y="388" font-size="13" font-weight="600" fill="#A32D2D" text-anchor="end">1 pt</text>
+
+<rect x="90" y="418" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#E24B4A" stroke-width="0.75"/>
+<text x="106" y="444" font-size="14" fill="#2C2C2A">วางระบบ CI ตรวจสอบอัตโนมัติ</text>
+<text x="580" y="444" font-size="13" font-weight="600" fill="#A32D2D" text-anchor="end">5 pt</text>
+
+<!-- RIGHT lane: fix alongside epics -->
+<rect x="660" y="140" width="560" height="340" rx="16" fill="#EAF3DE" stroke="#639922" stroke-width="1.5"/>
+<rect x="690" y="165" width="170" height="34" rx="17" fill="#639922"/>
+<text x="775" y="182" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">แก้ไปพร้อมงาน</text>
+<text x="690" y="225" font-size="13" fill="#27500A">แทรกในแต่ละ Epic ตลอด Phase 1 · ทยอยแก้</text>
+
+<rect x="690" y="250" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#639922" stroke-width="0.75"/>
+<text x="706" y="276" font-size="14" fill="#2C2C2A">เพิ่ม pagination ตอนทำ dashboard epic</text>
+<text x="1180" y="276" font-size="13" font-weight="600" fill="#27500A" text-anchor="end">5 pt</text>
+
+<rect x="690" y="306" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#639922" stroke-width="0.75"/>
+<text x="706" y="332" font-size="14" fill="#2C2C2A">เขียน test ตอน refactor แต่ละส่วน</text>
+<text x="1180" y="332" font-size="13" font-weight="600" fill="#27500A" text-anchor="end">8 pt</text>
+
+<rect x="690" y="362" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#639922" stroke-width="0.75"/>
+<text x="706" y="388" font-size="14" fill="#2C2C2A">รวมโค้ดซ้ำตอนแก้ไฟล์ที่เกี่ยวข้อง</text>
+<text x="1180" y="388" font-size="13" font-weight="600" fill="#27500A" text-anchor="end">5 pt</text>
+
+<rect x="690" y="418" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#639922" stroke-width="0.75"/>
+<text x="706" y="444" font-size="14" fill="#2C2C2A">จัดโครงสร้างใหม่ตอนต่อยอดฟีเจอร์</text>
+<text x="1180" y="444" font-size="13" font-weight="600" fill="#27500A" text-anchor="end">5 pt</text>
+
+<!-- Timeline strip -->
+<text x="640" y="494" font-size="12" fill="#5F5E5A" text-anchor="middle">● สิ่งที่ต้องแก้ก่อน (แดง)     ● สิ่งที่แก้คู่ขนานไปกับ epic (เขียว)</text>
+<rect x="60" y="500" width="1160" height="60" rx="10" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.75"/>
+<line x1="350" y1="500" x2="350" y2="560" stroke="#D3D1C7" stroke-width="0.75"/>
+<line x1="640" y1="500" x2="640" y2="560" stroke="#D3D1C7" stroke-width="0.75"/>
+<line x1="930" y1="500" x2="930" y2="560" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="205" y="548" font-size="13" font-weight="600" fill="#5F5E5A" text-anchor="middle">Sprint 1</text>
+<text x="495" y="548" font-size="13" font-weight="600" fill="#5F5E5A" text-anchor="middle">Sprint 2</text>
+<text x="785" y="548" font-size="13" font-weight="600" fill="#5F5E5A" text-anchor="middle">Sprint 3</text>
+<text x="1075" y="548" font-size="13" font-weight="600" fill="#5F5E5A" text-anchor="middle">Sprint 4</text>
+<circle cx="130" cy="516" r="5" fill="#E24B4A"/>
+<circle cx="170" cy="516" r="5" fill="#E24B4A"/>
+<circle cx="360" cy="516" r="5" fill="#E24B4A"/>
+<circle cx="400" cy="516" r="5" fill="#E24B4A"/>
+<circle cx="205" cy="516" r="5" fill="#639922"/>
+<circle cx="495" cy="516" r="5" fill="#639922"/>
+<circle cx="785" cy="516" r="5" fill="#639922"/>
+<circle cx="1075" cy="516" r="5" fill="#639922"/>
+
+<rect x="60" y="580" width="1160" height="110" rx="16" fill="#F4EDE3" stroke="#7b4b2a" stroke-width="1.5"/>
+<text x="640" y="625" font-size="22" font-weight="700" fill="#56351d" text-anchor="middle">ผลลัพธ์: ระบบดีขึ้นทุก Sprint ไปพร้อมกับฟีเจอร์ใหม่</text>
+<text x="640" y="658" font-size="18" fill="#6f4426" text-anchor="middle">ไม่ต้องหยุดทั้งระบบเพื่อรอ Refactor เสร็จก่อน</text>
+
+</svg>

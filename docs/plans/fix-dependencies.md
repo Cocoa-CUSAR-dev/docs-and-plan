@@ -188,3 +188,5 @@ Notes on the plan:
 :::tip[Keep this page honest]
 When an item lands, mark it ✅ in the [Weak-Point Register](/docs/phase-0) and strike it here (or move it out of its sprint row). Re-estimate anything that survives two sprint plannings — a size that keeps slipping is usually a 13 in disguise.
 :::
+
+Presenting this to the team or advisors? See the [Slide 4 kit](/docs/plans/slide-4-refactor-rationale) — two presentation-ready diagrams plus a talking-point script for "why we cut the dedicated Refactor phase."

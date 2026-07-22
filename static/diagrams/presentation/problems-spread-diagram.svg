@@ -1,0 +1,90 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="'Leelawadee UI','Noto Sans Thai',Tahoma,sans-serif" role="img">
+<title>ปัญหาที่พบกระจายอยู่ทั่วทั้งระบบ</title>
+<desc>แผนภาพแสดง 5 ส่วนของระบบ (มือถือ, Go backend, ฐานข้อมูล, Kotlin backend, เว็บแอป) แต่ละส่วนมีปัญหาที่พบจากการตรวจโค้ด รวมกว่า 40 ข้อ กระจายอยู่ทุกเลเยอร์</desc>
+<defs>
+<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#8A8578" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/>
+
+<text x="230" y="90" font-size="24" font-weight="700" fill="#2C2C2A">ปัญหาที่พบจากการตรวจโค้ด กระจายอยู่ทั่วทั้ง 5 ส่วนของระบบ</text>
+<text x="230" y="122" font-size="16" fill="#5F5E5A">ไม่มีส่วนไหนของระบบที่ "สะอาด" 100%</text>
+<text x="100" y="115" font-size="64" font-weight="700" fill="#A32D2D" text-anchor="middle">40+</text>
+
+<line x1="260" y1="305" x2="298" y2="305" stroke="#8A8578" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="500" y1="305" x2="538" y2="305" stroke="#8A8578" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="780" y1="305" x2="742" y2="305" stroke="#8A8578" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="1020" y1="305" x2="982" y2="305" stroke="#8A8578" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Box 1: Mobile app -->
+<g>
+<rect x="60" y="190" width="200" height="230" rx="12" fill="#F4F1EA" stroke="#8A8578" stroke-width="1"/>
+<text x="160" y="236" font-size="17" font-weight="700" fill="#2C2C2A" text-anchor="middle">แอปมือถือ</text>
+<text x="160" y="258" font-size="12" fill="#5F5E5A" text-anchor="middle">Flutter · BLoC</text>
+<line x1="80" y1="276" x2="240" y2="276" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="160" y="302" font-size="11" fill="#A32D2D" text-anchor="middle">ปัญหาที่พบ</text>
+<text x="160" y="330" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">URL เซิร์ฟเวอร์</text>
+<text x="160" y="350" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">ฝังตายตัว, ไม่เข้ารหัส</text>
+<circle cx="260" cy="190" r="22" fill="#E24B4A"/>
+<text x="260" y="190" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">6</text>
+</g>
+
+<!-- Box 2: Go backend -->
+<g>
+<rect x="300" y="190" width="200" height="230" rx="12" fill="#F4F1EA" stroke="#8A8578" stroke-width="1"/>
+<text x="400" y="236" font-size="17" font-weight="700" fill="#2C2C2A" text-anchor="middle">แบ็กเอนด์มือถือ</text>
+<text x="400" y="258" font-size="12" fill="#5F5E5A" text-anchor="middle">Go · Gin / GORM</text>
+<line x1="320" y1="276" x2="480" y2="276" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="400" y="302" font-size="11" fill="#A32D2D" text-anchor="middle">ปัญหาที่พบ</text>
+<text x="400" y="330" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">เขียนข้อมูลแยกจาก</text>
+<text x="400" y="350" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">Kotlin backend</text>
+<circle cx="500" cy="190" r="22" fill="#E24B4A"/>
+<text x="500" y="190" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">7</text>
+</g>
+
+<!-- Box 3: Database (emphasized, shared) -->
+<g>
+<rect x="540" y="185" width="200" height="240" rx="12" fill="#EFE0C8" stroke="#7b4b2a" stroke-width="2"/>
+<text x="640" y="234" font-size="17" font-weight="700" fill="#2C2C2A" text-anchor="middle">ฐานข้อมูลกลาง</text>
+<text x="640" y="256" font-size="12" fill="#5F5E5A" text-anchor="middle">PostgreSQL · ใช้ร่วมกัน</text>
+<line x1="560" y1="274" x2="720" y2="274" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="640" y="300" font-size="11" fill="#A32D2D" text-anchor="middle">ปัญหาที่พบ</text>
+<text x="640" y="328" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">สคริปต์สร้าง DB พัง</text>
+<text x="640" y="348" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">ไม่มี index เลย</text>
+<circle cx="740" cy="185" r="24" fill="#E24B4A"/>
+<text x="740" y="185" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">9</text>
+</g>
+
+<!-- Box 4: Kotlin backend -->
+<g>
+<rect x="780" y="190" width="200" height="230" rx="12" fill="#F4F1EA" stroke="#8A8578" stroke-width="1"/>
+<text x="880" y="236" font-size="17" font-weight="700" fill="#2C2C2A" text-anchor="middle">แบ็กเอนด์เว็บ</text>
+<text x="880" y="258" font-size="12" fill="#5F5E5A" text-anchor="middle">Kotlin · Spring · jOOQ</text>
+<line x1="800" y1="276" x2="960" y2="276" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="880" y="302" font-size="11" fill="#A32D2D" text-anchor="middle">ปัญหาที่พบ</text>
+<text x="880" y="330" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">ไม่ตรวจสิทธิ์เข้าถึง</text>
+<text x="880" y="350" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">ข้อมูลผู้ใช้คนอื่น</text>
+<circle cx="980" cy="190" r="22" fill="#E24B4A"/>
+<text x="980" y="190" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">10</text>
+</g>
+
+<!-- Box 5: Web app -->
+<g>
+<rect x="1020" y="190" width="200" height="230" rx="12" fill="#F4F1EA" stroke="#8A8578" stroke-width="1"/>
+<text x="1120" y="236" font-size="17" font-weight="700" fill="#2C2C2A" text-anchor="middle">เว็บนักวิจัย</text>
+<text x="1120" y="258" font-size="12" fill="#5F5E5A" text-anchor="middle">Next.js · React</text>
+<line x1="1040" y1="276" x2="1200" y2="276" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="1120" y="302" font-size="11" fill="#A32D2D" text-anchor="middle">ปัญหาที่พบ</text>
+<text x="1120" y="330" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">หน้าสมัครสมาชิก</text>
+<text x="1120" y="350" font-size="13" font-weight="500" fill="#444441" text-anchor="middle">กดแล้วไม่ทำงาน</text>
+<circle cx="1220" cy="190" r="22" fill="#E24B4A"/>
+<text x="1220" y="190" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">9</text>
+</g>
+
+<rect x="60" y="490" width="1160" height="130" rx="16" fill="#FCEBEB" stroke="#E24B4A" stroke-width="1"/>
+<text x="640" y="545" font-size="22" font-weight="700" fill="#791F1F" text-anchor="middle">ปัญหาไม่ได้กระจุกอยู่จุดเดียว — มันแทรกอยู่ในทุกเลเยอร์ที่ทีมต้องแตะอยู่แล้ว</text>
+<text x="640" y="580" font-size="18" fill="#A32D2D" text-anchor="middle">ถ้าแยก Phase "Refactor" ต่างหาก ต้องหยุดพัฒนาทั้ง 5 ส่วนพร้อมกัน</text>
+
+</svg>

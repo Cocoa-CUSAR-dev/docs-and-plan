@@ -1,0 +1,100 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',Arial,sans-serif" role="img">
+<title>Findings spread across every layer of the system</title>
+<desc>Diagram showing the 5 parts of the system (mobile app, Go backend, database, Kotlin backend, web app), each with a real finding count from the code audit, totaling 41 findings with no layer clean.</desc>
+<defs>
+<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#8A8578" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/>
+
+<text x="230" y="88" font-size="23" font-weight="700" fill="#2C2C2A">41 findings from the code audit, spread across all 5 parts of the system</text>
+<text x="230" y="120" font-size="15" fill="#5F5E5A">No single layer came back clean — see exact file:line citations below</text>
+<text x="100" y="115" font-size="60" font-weight="700" fill="#A32D2D" text-anchor="middle">41</text>
+
+<line x1="260" y1="305" x2="298" y2="305" stroke="#8A8578" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="500" y1="305" x2="538" y2="305" stroke="#8A8578" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="780" y1="305" x2="742" y2="305" stroke="#8A8578" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="1020" y1="305" x2="982" y2="305" stroke="#8A8578" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Box 1: Mobile app -->
+<g>
+<rect x="60" y="190" width="200" height="230" rx="12" fill="#F4F1EA" stroke="#8A8578" stroke-width="1"/>
+<text x="160" y="234" font-size="16" font-weight="700" fill="#2C2C2A" text-anchor="middle">Mobile app</text>
+<text x="160" y="256" font-size="12" fill="#5F5E5A" text-anchor="middle">Flutter · BLoC</text>
+<line x1="80" y1="274" x2="240" y2="274" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="160" y="300" font-size="11" fill="#A32D2D" text-anchor="middle">worst finding</text>
+<text x="160" y="326" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">backend URL hardcoded</text>
+<text x="160" y="344" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">to a LAN IP, plain HTTP</text>
+<text x="160" y="368" font-size="10.5" fill="#8A8578" text-anchor="middle">service_provider.dart:10</text>
+<text x="160" y="384" font-size="10.5" fill="#8A8578" text-anchor="middle">6 findings total</text>
+<circle cx="260" cy="190" r="22" fill="#E24B4A"/>
+<text x="260" y="190" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">6</text>
+</g>
+
+<!-- Box 2: Go backend -->
+<g>
+<rect x="300" y="190" width="200" height="230" rx="12" fill="#F4F1EA" stroke="#8A8578" stroke-width="1"/>
+<text x="400" y="234" font-size="16" font-weight="700" fill="#2C2C2A" text-anchor="middle">Go backend</text>
+<text x="400" y="256" font-size="12" fill="#5F5E5A" text-anchor="middle">Gin · GORM · :8080</text>
+<line x1="320" y1="274" x2="480" y2="274" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="400" y="300" font-size="11" fill="#A32D2D" text-anchor="middle">worst finding</text>
+<text x="400" y="326" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">independent ORM, no</text>
+<text x="400" y="344" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">contract with Kotlin/jOOQ</text>
+<text x="400" y="368" font-size="10.5" fill="#8A8578" text-anchor="middle">internal/models/*.go</text>
+<text x="400" y="384" font-size="10.5" fill="#8A8578" text-anchor="middle">7 findings total</text>
+<circle cx="500" cy="190" r="22" fill="#E24B4A"/>
+<text x="500" y="190" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">7</text>
+</g>
+
+<!-- Box 3: Database (emphasized, shared) -->
+<g>
+<rect x="540" y="185" width="200" height="240" rx="12" fill="#EFE0C8" stroke="#7b4b2a" stroke-width="2"/>
+<text x="640" y="232" font-size="16" font-weight="700" fill="#2C2C2A" text-anchor="middle">Shared database</text>
+<text x="640" y="254" font-size="12" fill="#5F5E5A" text-anchor="middle">PostgreSQL, 65 tables</text>
+<line x1="560" y1="272" x2="720" y2="272" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="640" y="298" font-size="11" fill="#A32D2D" text-anchor="middle">worst finding</text>
+<text x="640" y="324" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">trigger functions cut off</text>
+<text x="640" y="342" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">mid-body — repo won't build</text>
+<text x="640" y="366" font-size="10.5" fill="#8A8578" text-anchor="middle">other.sql:17-24</text>
+<text x="640" y="382" font-size="10.5" fill="#8A8578" text-anchor="middle">9 findings total</text>
+<circle cx="740" cy="185" r="24" fill="#E24B4A"/>
+<text x="740" y="185" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">9</text>
+</g>
+
+<!-- Box 4: Kotlin backend -->
+<g>
+<rect x="780" y="190" width="200" height="230" rx="12" fill="#F4F1EA" stroke="#8A8578" stroke-width="1"/>
+<text x="880" y="234" font-size="16" font-weight="700" fill="#2C2C2A" text-anchor="middle">Web backend</text>
+<text x="880" y="256" font-size="12" fill="#5F5E5A" text-anchor="middle">Kotlin · Spring · jOOQ</text>
+<line x1="800" y1="274" x2="960" y2="274" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="880" y="300" font-size="11" fill="#A32D2D" text-anchor="middle">worst finding</text>
+<text x="880" y="326" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">no @PreAuthorize — reads</text>
+<text x="880" y="344" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">any user's form answers</text>
+<text x="880" y="368" font-size="10.5" fill="#8A8578" text-anchor="middle">FormResponseController.kt</text>
+<text x="880" y="384" font-size="10.5" fill="#8A8578" text-anchor="middle">10 findings total</text>
+<circle cx="980" cy="190" r="22" fill="#E24B4A"/>
+<text x="980" y="190" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">10</text>
+</g>
+
+<!-- Box 5: Web app -->
+<g>
+<rect x="1020" y="190" width="200" height="230" rx="12" fill="#F4F1EA" stroke="#8A8578" stroke-width="1"/>
+<text x="1120" y="234" font-size="16" font-weight="700" fill="#2C2C2A" text-anchor="middle">Researcher web</text>
+<text x="1120" y="256" font-size="12" fill="#5F5E5A" text-anchor="middle">Next.js 16 · React</text>
+<line x1="1040" y1="274" x2="1200" y2="274" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="1120" y="300" font-size="11" fill="#A32D2D" text-anchor="middle">worst finding</text>
+<text x="1120" y="326" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">register button wired</text>
+<text x="1120" y="344" font-size="12.5" font-weight="500" fill="#444441" text-anchor="middle">to nothing — silent no-op</text>
+<text x="1120" y="368" font-size="10.5" fill="#8A8578" text-anchor="middle">AuthRegisterModule.tsx</text>
+<text x="1120" y="384" font-size="10.5" fill="#8A8578" text-anchor="middle">9 findings total</text>
+<circle cx="1220" cy="190" r="22" fill="#E24B4A"/>
+<text x="1220" y="190" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">9</text>
+</g>
+
+<rect x="60" y="490" width="1160" height="130" rx="16" fill="#FCEBEB" stroke="#E24B4A" stroke-width="1"/>
+<text x="640" y="545" font-size="21" font-weight="700" fill="#791F1F" text-anchor="middle">The problems aren't concentrated — they're threaded through every layer we already touch</text>
+<text x="640" y="580" font-size="17" fill="#A32D2D" text-anchor="middle">A separate "Refactor" phase would mean freezing all 5 parts of the system at once</text>
+
+</svg>

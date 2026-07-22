@@ -1,0 +1,79 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',Arial,sans-serif" role="img">
+<title>Fix strategy: alongside the work, not a separate Refactor phase</title>
+<desc>Two-lane diagram comparing the small set of blocking foundation fixes done first with the larger set of fixes folded into normal Phase I epics, plus a timeline strip showing blocking items cluster early while parallel items spread across every sprint.</desc>
+
+<rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/>
+
+<text x="640" y="58" font-size="25" font-weight="700" fill="#2C2C2A" text-anchor="middle">Fix strategy: alongside the work, not a separate Refactor phase</text>
+<text x="640" y="90" font-size="15" fill="#5F5E5A" text-anchor="middle">Every finding is sized and sequenced by dependency — nothing here is a guess</text>
+
+<line x1="640" y1="138" x2="640" y2="478" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+
+<!-- LEFT lane: fix first -->
+<rect x="60" y="138" width="560" height="340" rx="16" fill="#FCEBEB" stroke="#E24B4A" stroke-width="1.5"/>
+<rect x="90" y="163" width="150" height="34" rx="17" fill="#E24B4A"/>
+<text x="165" y="180" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">fix first</text>
+<text x="90" y="223" font-size="13" fill="#791F1F">blocking foundation · sprint 1-2 · ~12 story points</text>
+
+<rect x="90" y="248" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#E24B4A" stroke-width="0.75"/>
+<text x="106" y="274" font-size="14" fill="#2C2C2A">restore other.sql trigger functions</text>
+<text x="580" y="274" font-size="13" font-weight="600" fill="#A32D2D" text-anchor="end">1 pt</text>
+
+<rect x="90" y="304" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#E24B4A" stroke-width="0.75"/>
+<text x="106" y="330" font-size="14" fill="#2C2C2A">add @PreAuthorize + ownership checks</text>
+<text x="580" y="330" font-size="13" font-weight="600" fill="#A32D2D" text-anchor="end">5 pt</text>
+
+<rect x="90" y="360" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#E24B4A" stroke-width="0.75"/>
+<text x="106" y="386" font-size="14" fill="#2C2C2A">move backend URL to env config</text>
+<text x="580" y="386" font-size="13" font-weight="600" fill="#A32D2D" text-anchor="end">1 pt</text>
+
+<rect x="90" y="416" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#E24B4A" stroke-width="0.75"/>
+<text x="106" y="442" font-size="14" fill="#2C2C2A">stand up CI (build, test, schema check)</text>
+<text x="580" y="442" font-size="13" font-weight="600" fill="#A32D2D" text-anchor="end">5 pt</text>
+
+<!-- RIGHT lane: fix alongside epics -->
+<rect x="660" y="138" width="560" height="340" rx="16" fill="#EAF3DE" stroke="#639922" stroke-width="1.5"/>
+<rect x="690" y="163" width="195" height="34" rx="17" fill="#639922"/>
+<text x="787" y="180" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">fix alongside epics</text>
+<text x="690" y="223" font-size="13" fill="#27500A">folded into every sprint of Phase I as that code is touched</text>
+
+<rect x="690" y="248" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#639922" stroke-width="0.75"/>
+<text x="706" y="274" font-size="14" fill="#2C2C2A">add pagination while building the dashboard</text>
+<text x="1180" y="274" font-size="13" font-weight="600" fill="#27500A" text-anchor="end">5 pt</text>
+
+<rect x="690" y="304" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#639922" stroke-width="0.75"/>
+<text x="706" y="330" font-size="14" fill="#2C2C2A">write tests while refactoring each area</text>
+<text x="1180" y="330" font-size="13" font-weight="600" fill="#27500A" text-anchor="end">8 pt</text>
+
+<rect x="690" y="360" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#639922" stroke-width="0.75"/>
+<text x="706" y="386" font-size="14" fill="#2C2C2A">dedupe BFF/dashboard code while editing it</text>
+<text x="1180" y="386" font-size="13" font-weight="600" fill="#27500A" text-anchor="end">5 pt</text>
+
+<rect x="690" y="416" width="500" height="42" rx="10" fill="#FFFFFF" stroke="#639922" stroke-width="0.75"/>
+<text x="706" y="442" font-size="14" fill="#2C2C2A">clean up structure while extending features</text>
+<text x="1180" y="442" font-size="13" font-weight="600" fill="#27500A" text-anchor="end">5 pt</text>
+
+<!-- Timeline strip -->
+<text x="640" y="492" font-size="12" fill="#5F5E5A" text-anchor="middle">● must fix first (red)     ● fixed in parallel with epics (green)</text>
+<rect x="60" y="498" width="1160" height="60" rx="10" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.75"/>
+<line x1="350" y1="498" x2="350" y2="558" stroke="#D3D1C7" stroke-width="0.75"/>
+<line x1="640" y1="498" x2="640" y2="558" stroke="#D3D1C7" stroke-width="0.75"/>
+<line x1="930" y1="498" x2="930" y2="558" stroke="#D3D1C7" stroke-width="0.75"/>
+<text x="205" y="546" font-size="13" font-weight="600" fill="#5F5E5A" text-anchor="middle">Sprint 1</text>
+<text x="495" y="546" font-size="13" font-weight="600" fill="#5F5E5A" text-anchor="middle">Sprint 2</text>
+<text x="785" y="546" font-size="13" font-weight="600" fill="#5F5E5A" text-anchor="middle">Sprint 3</text>
+<text x="1075" y="546" font-size="13" font-weight="600" fill="#5F5E5A" text-anchor="middle">Sprint 4</text>
+<circle cx="130" cy="514" r="5" fill="#E24B4A"/>
+<circle cx="170" cy="514" r="5" fill="#E24B4A"/>
+<circle cx="360" cy="514" r="5" fill="#E24B4A"/>
+<circle cx="400" cy="514" r="5" fill="#E24B4A"/>
+<circle cx="205" cy="514" r="5" fill="#639922"/>
+<circle cx="495" cy="514" r="5" fill="#639922"/>
+<circle cx="785" cy="514" r="5" fill="#639922"/>
+<circle cx="1075" cy="514" r="5" fill="#639922"/>
+
+<rect x="60" y="578" width="1160" height="110" rx="16" fill="#F4EDE3" stroke="#7b4b2a" stroke-width="1.5"/>
+<text x="640" y="623" font-size="21" font-weight="700" fill="#56351d" text-anchor="middle">Result: the system improves every sprint, alongside new features</text>
+<text x="640" y="656" font-size="17" fill="#6f4426" text-anchor="middle">No need to freeze the whole system waiting for a Refactor phase to finish</text>
+
+</svg>
