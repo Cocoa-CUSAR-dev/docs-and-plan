@@ -19,6 +19,8 @@ Phase 0 of this capstone analyzes the system we inherited: **is it able to scale
 
 Decision values: 🔧 **Fix (Phase I)** · 📌 **Accept & document** · ⏳ **Undecided** · ✅ **Done**
 
+Separately from weak points (bugs/gaps in the code), the **final report itself** makes several claims that don't hold up against the code — see the **[Documented Claims vs. Code Reality](/docs/phase-0/false-claims-register)** register.
+
 ---
 
 ## 1. Database
