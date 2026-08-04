@@ -1,0 +1,9 @@
+{
+  "label": "CI/CD",
+  "position": 7,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Continuous integration and deployment pipelines."
+  }
+}
