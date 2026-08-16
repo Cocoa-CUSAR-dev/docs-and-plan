@@ -74,6 +74,8 @@ Unsatisfied requirements: none for this decision itself; it depends on [ADR 0005
 
 ## References
 
+* [Backend Fixes Needed for the Chatbot Project](/docs/plans/backend-fix-proposal) - plain-language version of this ADR's must-fix/nice-to-fix list, for presenting to the BE lead
 * [Architecture Review recap — Part 1 & Part 4.1](/docs/plans/architecture-session-notes#seam)
 * [Phase 0 Weak-Point Register](/docs/phase-0)
+* [Documented Claims vs. Code Reality](/docs/phase-0/false-claims-register)
 * [Critical Issues tracker](/docs/critical-issues)
