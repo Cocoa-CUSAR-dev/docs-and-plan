@@ -43,6 +43,12 @@ const cards = [
     description:
       'Every legacy document — reports, manuals, presentations, trip feedback, datasets — hosted or indexed.',
   },
+  {
+    title: '🍫 Sprint 1 Wrapped',
+    to: '/wrapped/sprint-1',
+    description:
+      'Real commit/PR/CI/task data from Sprint 1, Spotify-Wrapped style. Tap through, in Thai.',
+  },
 ];
 
 function HomepageHeader() {
