@@ -18,8 +18,8 @@ Highest-severity items outside the database — full detail in the [audit](/docs
 
 | ID | Issue | Severity | Status | Owner | Fixed on |
 |---|---|---|---|---|---|
-| BE-2 (M5) | Any authenticated user can read anyone's task responses (no `@PreAuthorize`, no ownership check) | 🔴 P5 | 🟥 Open | — | — |
-| BE-3 (M6) | Bulk raw-data export endpoint has no authorization at all | 🔴 P5 | 🟥 Open | — | — |
+| BE-2 (M5) | Any authenticated user could read anyone's task responses (no `@PreAuthorize`, no ownership check) | 🔴 P5 | ✅ Fixed | — | `V11` migration + live `@PreAuthorize` gates, confirmed 2026-08-18 |
+| BE-3 (M6) | Bulk raw-data export endpoint had no authorization at all | 🔴 P5 | ✅ Fixed | — | `@PreAuthorize` on `ReportController`, confirmed 2026-08-18 |
 | BE-1 (M2) | Auth cookie not marked `Secure` | 🔴 P5 | 🟥 Open | — | — |
 | FE-1 (M9–M11) | Web registration flow broken end-to-end (BFF route no-ops, button wired to nothing) | 🔴 P5 | 🟥 Open | — | — |
 | APP-1 | Mobile backend URL hardcoded to a LAN IP over plain HTTP | 🔴 | 🟥 Open | — | — |
