@@ -46,8 +46,8 @@ From the [Researcher-Side Code Quality Audit](/docs/phase-0/researcher-audit) �
 | ID | Weak point | Why it blocks scaling | Severity | Decision |
 |---|---|---|---|---|
 | BE-1 (M2) | Auth cookie not marked `Secure` (commented out) | Session token can leak over plain HTTP once deployed publicly (Phase I) | 🔴 P5 | 🔧 Fix (Phase I) |
-| BE-2 (M5) | `FormResponseController`/`TaskController` have **no `@PreAuthorize` and no ownership check** — any authenticated user can read anyone's task responses | Real farmers' survey data exposed to every account; unacceptable in production | 🔴 P5 | 🔧 Fix (Phase I) |
-| BE-3 (M6) | Bulk raw-data export endpoint has **no authorization at all** | Whole-database exfiltration by any logged-in user | 🔴 P5 | 🔧 Fix (Phase I) |
+| BE-2 (M5) | ~~`FormResponseController`/`TaskController` had no `@PreAuthorize` and no ownership check~~ — **fixed**: both endpoints now require `read:task:all`/`read:response:all`, seeded and granted only to `researcher` by `database/migrations/V11__task_response_read_permissions.sql`; confirmed live against the DB that `farmer`/`hub_collector`/`processor` hold none of the `read:*:all` authorities | Real farmers' survey data exposed to every account; unacceptable in production | 🔴 P5 | ✅ Done |
+| BE-3 (M6) | ~~Bulk raw-data export endpoint had no authorization at all~~ — **fixed**: `ReportController` now requires `read:report:all`, confirmed live in the DB as granted only to `researcher` (no migration file found seeding it, but the grant is live) | Whole-database exfiltration by any logged-in user | 🔴 P5 | ✅ Done |
 | BE-4 (P1) | Every request re-runs a 4-table JOIN to reload roles/permissions | Per-request DB load scales with traffic; caching/claims fix it | 🟠 P4 | ⏳ Undecided |
 | BE-5 (P2) | `fetchRefChoices` re-introspects the whole DB schema per option field | Form rendering slows as schema grows | 🟠 P4 | ⏳ Undecided |
 | BE-6 (M1) | **Zero automated tests** | Refactoring (Phase I's core activity!) without a safety net | 🟠 P4 | 🔧 Fix (Phase I) |
