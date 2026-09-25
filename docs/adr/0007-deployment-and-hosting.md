@@ -12,7 +12,8 @@ title: "ADR 0007: Deployment, CI/CD & Hosting"
 ## Change Log
 
 * [approved](/docs/plans/architecture-session-notes#deploy-ops) 2026-07-27 — CI/CD tooling only
-* [pending](/docs/plans/architecture-session-notes#open-items) — hosting target for the chatbot service (and possibly the existing Go/Kotlin backends)
+* **resolved 2026-09-25 — hosting target confirmed: Render.** mobile-backend, web-backend, web-app, and chatbot are all deployed on Render. This entry replaces the earlier "pending" status below, which was stale (the team had already settled on Render before this doc was corrected).
+* ~~[pending](/docs/plans/architecture-session-notes#open-items) — hosting target for the chatbot service (and possibly the existing Go/Kotlin backends)~~ superseded by the entry above.
 
 ## Referenced Use Case(s)
 
@@ -20,7 +21,9 @@ title: "ADR 0007: Deployment, CI/CD & Hosting"
 
 ## Context
 
-The existing system has no CI/CD at all (`X-1` in the Phase 0 register — nothing builds, tests, or validates any of the four codebases automatically). A new chatbot service adds a fifth codebase that needs the same treatment. Separately, the original plan assumed the new chatbot service would deploy onto "the existing 3-VM AWS setup" the old team was running — that assumption turned out to be false: **there is no AWS account being handed over from the old team.** The database is unaffected (the team already independently runs it on their own NeonDB account), but where the Go backend, Kotlin backend, and the new chatbot service actually run is now a genuinely open question — possibly affecting the *existing* backends' hosting too, not just the new service.
+The existing system has no CI/CD at all (`X-1` in the Phase 0 register — nothing builds, tests, or validates any of the four codebases automatically). A new chatbot service adds a fifth codebase that needs the same treatment. Separately, the original plan assumed the new chatbot service would deploy onto "the existing 3-VM AWS setup" the old team was running — that assumption turned out to be false: **there is no AWS account being handed over from the old team.** The database is unaffected (the team already independently runs it on their own NeonDB account).
+
+**Update 2026-09-25:** the hosting question below is resolved — the team moved to **Render** for the deployed backend/web services. `mobile-backend` and `web-backend` were the first two confirmed there (`mobile-backend/render.yaml`, and `web-backend`'s CD workflow is gated on Render's own "Auto-Deploy: After CI Checks Pass" setting); `web-app` and `chatbot` are now deployed there too. `mobile-app` is a client (ships as APK/iOS builds, not a hosted service) and `database` stays on the team's own NeonDB account, so neither is part of this hosting decision. The rest of this document is kept as-is below for historical context on how the decision was reached; see the Decision section for the current state.
 
 ## Proposed Design
 
@@ -38,23 +41,22 @@ The existing system has no CI/CD at all (`X-1` in the Phase 0 register — nothi
 
 **CI/CD tool — GitHub Actions (chosen, confirmed already in use by the team).** A teammate already uses GitHub Actions elsewhere; the new chatbot repo mirrors the same pipeline pattern rather than introducing a second CI tool. Low-risk, no real alternative considered given it's already a team-familiar tool.
 
-**Hosting target — originally assumed: the existing 3-VM AWS setup (invalidated).** This was the working assumption until the team confirmed there is no AWS account being handed over from the old team. Marking this **pending** rather than guessing a replacement — the right next step is confirming with the team and the old team what, if anything, is available, not picking a new host unilaterally.
+**Hosting target — originally assumed: the existing 3-VM AWS setup (invalidated), now resolved: Render.** The AWS assumption was invalidated when the team confirmed there was no AWS account being handed over from the old team. The team subsequently settled on **Render** — `mobile-backend` and `web-backend` were deployed there first, followed by `web-app` and `chatbot`.
 
-**How resolved:** CI/CD tool confirmed with the team (GitHub Actions). Hosting explicitly **not resolved** — flagged 🔴 critical, then corrected to ⏳ pending once the team confirmed they're actively chasing an answer (not stalled, just not yet decided).
+**How resolved:** CI/CD tool confirmed with the team (GitHub Actions). Hosting was flagged 🔴 critical, then ⏳ pending while the team chased an answer, and is now ✅ **resolved: Render**, confirmed by all four hosted services being live there as of 2026-09-25.
 
 ## Decision
 
-Agreed so far:
+Agreed:
 * **CI/CD: GitHub Actions**, same pipeline shape (lint → type-check → test → build → deploy) applied to the new chatbot repo as well as the existing four.
 * Feature flags: environment-variable based, per-service — no shared feature-flag mechanism across services.
+* **Hosting: Render**, for every deployed backend/web service — `mobile-backend`, `web-backend`, `web-app`, and `chatbot`. `mobile-app` ships as client builds (APK/iOS), not a hosted service, so it isn't part of this decision. `database` stays on the team's own NeonDB account, unaffected.
 
-**Not yet decided — this is the open item:**
-* Where the chatbot service (and possibly the existing Go/Kotlin backends) actually gets hosted, now that the AWS handover assumption is invalidated.
-* Whether the *existing* system's current hosting is even confirmed to be under the new team's control going forward — this needs a direct answer, not an assumption, before any deploy-target decision can be made.
+**Open follow-ups (tracked separately, not blocking this ADR):**
+* `web-app` and `chatbot` are deployed via Render's dashboard configuration rather than a committed `render.yaml` (unlike `mobile-backend`) — moving them to IaC for consistency is a nice-to-have, not required.
+* Environment separation (dev/staging/prod) on Render and TLS coverage verification are tracked under `X-6d` and `X-6e`/`X-6f` respectively, not part of this ADR's original scope.
 
-Caveats: this ADR intentionally stays open rather than picking a placeholder host, because guessing here risks designing deploy configuration (secrets, networking, DNS) around a target that turns out to be wrong.
-
-Unsatisfied requirements: a real hosting decision. Action item on record: the team is raising this directly with the old team; no timeline given as of 2026-07-27.
+Caveats: none remaining for the hosting question itself — see the open follow-ups above for adjacent, non-blocking work.
 
 ## Other Related ADRs
 
