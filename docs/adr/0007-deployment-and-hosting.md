@@ -12,8 +12,8 @@ title: "ADR 0007: Deployment, CI/CD & Hosting"
 ## Change Log
 
 * [approved](/docs/plans/architecture-session-notes#deploy-ops) 2026-07-27 — CI/CD tooling only
-* **resolved 2026-09-25 — hosting target confirmed: Render.** mobile-backend, web-backend, web-app, and chatbot are all deployed on Render. This entry replaces the earlier "pending" status below, which was stale (the team had already settled on Render before this doc was corrected).
-* ~~[pending](/docs/plans/architecture-session-notes#open-items) — hosting target for the chatbot service (and possibly the existing Go/Kotlin backends)~~ superseded by the entry above.
+* ~~resolved 2026-09-25 — hosting target confirmed: Render (all four services)~~ **corrected 2026-09-27** — that entry was wrong for two of the four. Actual split: **Render** for mobile-backend and web-backend; **Vercel** for web-app and chatbot. Confirmed directly with the team (chatbot has no Render config of any kind — no `render.yaml`, nothing — and its GitHub Environments/deployment history are Vercel's own Preview/Production, not Render's).
+* ~~[pending](/docs/plans/architecture-session-notes#open-items) — hosting target for the chatbot service (and possibly the existing Go/Kotlin backends)~~ superseded by the entries above.
 
 ## Referenced Use Case(s)
 
@@ -23,7 +23,7 @@ title: "ADR 0007: Deployment, CI/CD & Hosting"
 
 The existing system has no CI/CD at all (`X-1` in the Phase 0 register — nothing builds, tests, or validates any of the four codebases automatically). A new chatbot service adds a fifth codebase that needs the same treatment. Separately, the original plan assumed the new chatbot service would deploy onto "the existing 3-VM AWS setup" the old team was running — that assumption turned out to be false: **there is no AWS account being handed over from the old team.** The database is unaffected (the team already independently runs it on their own NeonDB account).
 
-**Update 2026-09-25:** the hosting question below is resolved — the team moved to **Render** for the deployed backend/web services. `mobile-backend` and `web-backend` were the first two confirmed there (`mobile-backend/render.yaml`, and `web-backend`'s CD workflow is gated on Render's own "Auto-Deploy: After CI Checks Pass" setting); `web-app` and `chatbot` are now deployed there too. `mobile-app` is a client (ships as APK/iOS builds, not a hosted service) and `database` stays on the team's own NeonDB account, so neither is part of this hosting decision. The rest of this document is kept as-is below for historical context on how the decision was reached; see the Decision section for the current state.
+**Update 2026-09-27:** the hosting question below is resolved, with a mixed split rather than one platform for everything. `mobile-backend` and `web-backend` run on **Render** (`mobile-backend/render.yaml`, and `web-backend`'s CD workflow is gated on Render's own "Auto-Deploy: After CI Checks Pass" setting). `web-app` and `chatbot` run on **Vercel** instead — confirmed with the team directly; chatbot has no Render config at all. `mobile-app` is a client (ships as APK/iOS builds, not a hosted service) and `database` stays on the team's own NeonDB account, so neither is part of this hosting decision. The rest of this document is kept as-is below for historical context on how the decision was reached; see the Decision section for the current state.
 
 ## Proposed Design
 
@@ -41,19 +41,20 @@ The existing system has no CI/CD at all (`X-1` in the Phase 0 register — nothi
 
 **CI/CD tool — GitHub Actions (chosen, confirmed already in use by the team).** A teammate already uses GitHub Actions elsewhere; the new chatbot repo mirrors the same pipeline pattern rather than introducing a second CI tool. Low-risk, no real alternative considered given it's already a team-familiar tool.
 
-**Hosting target — originally assumed: the existing 3-VM AWS setup (invalidated), now resolved: Render.** The AWS assumption was invalidated when the team confirmed there was no AWS account being handed over from the old team. The team subsequently settled on **Render** — `mobile-backend` and `web-backend` were deployed there first, followed by `web-app` and `chatbot`.
+**Hosting target — originally assumed: the existing 3-VM AWS setup (invalidated), now resolved: Render + Vercel, split by service.** The AWS assumption was invalidated when the team confirmed there was no AWS account being handed over from the old team. The team subsequently settled on a two-platform split: **Render** for `mobile-backend` and `web-backend`, **Vercel** for `web-app` and `chatbot`.
 
-**How resolved:** CI/CD tool confirmed with the team (GitHub Actions). Hosting was flagged 🔴 critical, then ⏳ pending while the team chased an answer, and is now ✅ **resolved: Render**, confirmed by all four hosted services being live there as of 2026-09-25.
+**How resolved:** CI/CD tool confirmed with the team (GitHub Actions). Hosting was flagged 🔴 critical, then ⏳ pending while the team chased an answer, then briefly recorded as "Render for everything" (wrong for two of the four services), and is now ✅ **resolved and confirmed with the team**: Render (mobile-backend, web-backend) + Vercel (web-app, chatbot), as of 2026-09-27.
 
 ## Decision
 
 Agreed:
 * **CI/CD: GitHub Actions**, same pipeline shape (lint → type-check → test → build → deploy) applied to the new chatbot repo as well as the existing four.
 * Feature flags: environment-variable based, per-service — no shared feature-flag mechanism across services.
-* **Hosting: Render**, for every deployed backend/web service — `mobile-backend`, `web-backend`, `web-app`, and `chatbot`. `mobile-app` ships as client builds (APK/iOS), not a hosted service, so it isn't part of this decision. `database` stays on the team's own NeonDB account, unaffected.
+* **Hosting: split by service, not one platform.** `mobile-backend` and `web-backend` on **Render**; `web-app` and `chatbot` on **Vercel**. `mobile-app` ships as client builds (APK/iOS), not a hosted service, so it isn't part of this decision. `database` stays on the team's own NeonDB account, unaffected.
 
 **Open follow-ups (tracked separately, not blocking this ADR):**
-* `web-app` and `chatbot` are deployed via Render's dashboard configuration rather than a committed `render.yaml` (unlike `mobile-backend`) — moving them to IaC for consistency is a nice-to-have, not required.
+* `web-backend` is deployed via Render's dashboard configuration rather than a committed `render.yaml` (unlike `mobile-backend`) — moving it to IaC for consistency is a nice-to-have, not required.
+* `chatbot` being on Vercel (serverless) rather than a persistent host has a real functional consequence, not just a labeling one: `src/reminders/scheduler.py`'s in-process APScheduler can't fire reliably there, so reminders/idle-conversation-pause now depend on an external trigger (cron-job.org calling `/internal/cron/*`) instead. This is being handled in the chatbot repo directly, not tracked as a separate X-6 item.
 * Environment separation (dev/staging/prod) on Render and TLS coverage verification are tracked under `X-6d` and `X-6e`/`X-6f` respectively, not part of this ADR's original scope.
 
 Caveats: none remaining for the hosting question itself — see the open follow-ups above for adjacent, non-blocking work.
