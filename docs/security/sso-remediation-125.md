@@ -22,8 +22,11 @@ issues.
 
 | Outcome | Findings |
 | --- | --- |
-| Remediated & retest-passed | F1, F2, F3, F4, F5, F7 |
-| Open — deferred to follow-up | F6, F8 |
+| Remediated & retest-passed | F1, F2, F3, F4, F5, F6, F7, F8 |
+
+All eight findings are remediated in code. Two residual items are ops/prod
+config, not code: rotating the `/service` key (F4) and pinning the real
+`CORS_ORIGINS` per environment (F8).
 
 F4's in-code angle is remediated (mint scoped to LINE-linked users + rate-limit
 + audit log); rotating the shared `/service` key remains an ops recommendation.
@@ -37,9 +40,9 @@ F4's in-code angle is remediated (mint scoped to LINE-linked users + rate-limit
 | F3 | 🟠 Medium | Remediated | web-backend `4eb6cb1` + database `cf90a20` |
 | F4 | 🟠 Medium | Remediated (mint scoped + rate-limited + audited; key rotation recommended) | web-backend `dc21e42`, `8142a21` |
 | F5 | 🟠 Medium | Remediated | web-backend `7b343de` |
-| F6 | 🟡 Low | Open — prod verification | — |
+| F6 | 🟡 Low | Remediated (by the F2 rewrite) | web-app `41a3312` |
 | F7 | 🟡 Low | Remediated | web-backend `8142a21` |
-| F8 | 🟡 Low | Open — prod verification | — |
+| F8 | 🟡 Low | Remediated (explicit CORS; pin origins in prod) | web-backend `4490429` |
 
 ## 3. Remediation detail
 
@@ -66,6 +69,15 @@ Mechanism lives in the commits above; summarised here for the audit trail.
   session for an arbitrary or never-linked user; every mint is audit-logged. Rate
   limiting (F7) additionally blunts brute-forcing. Rotating the shared `/service`
   key remains an ops recommendation.
+- **F6 — redirect host.** Resolved by the F2 rewrite: the server `/sso` route that
+  built a redirect from the client-supplied `x-forwarded-host` was removed; the
+  new client page redirects with a relative, same-origin path, so no
+  client-controlled host is trusted.
+- **F8 — CORS.** Method and header wildcards are replaced with explicit
+  allow-lists (credentials are allowed, so wildcards were risky), and the app
+  logs a warning when `cors.origins` is unset. All browser traffic reaches the
+  backend via the web-app BFF, so no real cross-origin call is affected. Pinning
+  the real `CORS_ORIGINS` per environment remains a prod-config step.
 
 ## 4. Retest
 
@@ -81,34 +93,33 @@ retest against a running instance on the fix branch. Values below are scrubbed
 | F3 | Same minted token exchanged twice at `POST /auth/sso/exchange` | `200`, `200` | `200`, `401` |
 | F4 | mint (`POST /service/sso/tokens`) for a user with no `auth.line_identity` row | token minted (success) | `403` (refused) |
 | F5 | `Set-Cookie` on exchange | no `SameSite` attribute | `SameSite=Lax` present¹ |
+| F6 | `x-forwarded-host` usage in web-app `src` | present in the `/sso` server route | none (route removed; relative same-origin redirect) |
 | F7 | hammer `POST /service/sso/tokens` (limit set to 3 for the probe) | 25 requests, all pass the limiter (no `429`) | `429` from the 4th request on, before auth runs |
+| F8 | CORS config for `/**` | `allowedMethods`/`allowedHeaders` = `["*"]` with credentials | explicit method/header allow-lists with credentials |
 
 ¹ `Secure` is also set in production (`cookie.secure=true`); it is absent only on
 the plain-HTTP local dev instance used for the retest.
 
 **Automated suite:** F1/F3/F5 are covered by `SsoSecurityTest`, F2 by a chatbot
 test asserting the deep link uses the fragment, F7 by `RateLimitFilterTest`, and
-F4 by an `SsoServiceTest` case refusing a mint for an unlinked user. Each was
-written to fail before its fix and pass after. The full web-backend suite + ktlint, and the chatbot suite, pass on
-the fix branches (web-backend's pre-existing cross-surface identity e2e #126
-included).
+F4 by an `SsoServiceTest` case refusing a mint for an unlinked user, and F8 by a
+`SecurityCorsConfigTest` asserting non-wildcard CORS. Each was written to fail
+before its fix and pass after. The full web-backend suite + ktlint, and the
+chatbot suite, pass on the fix branches (web-backend's pre-existing cross-surface
+identity e2e #126 included).
 
-**Retest verdict:** F1, F2, F3, F4, F5, F7 — **closed** (F4's key-rotation
-residual aside). F6, F8 remain for prod verification.
+**Retest verdict:** all eight findings (F1–F8) — **closed in code**. Two residual
+items are ops/prod config (below), not code.
 
-## 5. Deferred findings → recommended follow-up
+## 5. Residual (ops / prod config) and recommended follow-up
 
-Tracked as sub-issues of #125 (see assessment report for full detail):
+No findings remain open in code. Residual operational items:
 
-| ID | Follow-up |
-| --- | --- |
-| F6 | Verify prod reverse-proxy handling of `x-forwarded-host`, or allowlist it. |
-| F8 | Verify prod CORS origin configuration; pin explicit origins. |
+- **F4** — rotate the shared `/service` key periodically and keep it in a secret manager.
+- **F8** — set `CORS_ORIGINS` to the web app's real origin(s) in each deployed environment.
 
-Additionally recommended (ops): rotate the shared `/service` key periodically
-and keep it in a secret manager (residual of F4); an independent black-box
-pen-test on staging by a non-author; and a janitor to purge expired rows from
-`auth.sso_used_token`.
+Additionally recommended: an independent black-box pen-test on staging by a
+non-author, and a janitor to purge expired rows from `auth.sso_used_token`.
 
 ## Methodology & limitations
 
