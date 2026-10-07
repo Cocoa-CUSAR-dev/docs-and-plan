@@ -22,8 +22,11 @@ issues.
 
 | Outcome | Findings |
 | --- | --- |
-| Remediated & retest-passed | F1, F2, F3, F5 |
-| Open — deferred to follow-up | F4, F6, F7, F8 |
+| Remediated & retest-passed | F1, F2, F3, F4, F5, F7 |
+| Open — deferred to follow-up | F6, F8 |
+
+F4's in-code angle is remediated (mint scoped to LINE-linked users + rate-limit
++ audit log); rotating the shared `/service` key remains an ops recommendation.
 
 ## 2. Status by finding
 
@@ -32,10 +35,10 @@ issues.
 | F1 | 🔴 High | Remediated | web-backend `a72e72b` |
 | F2 | 🔴 High | Remediated | web-app `41a3312` + chatbot `a30fd4d` |
 | F3 | 🟠 Medium | Remediated | web-backend `4eb6cb1` + database `cf90a20` |
-| F4 | 🟠 Medium | Open — follow-up issue | — |
+| F4 | 🟠 Medium | Remediated (mint scoped + rate-limited + audited; key rotation recommended) | web-backend `dc21e42`, `8142a21` |
 | F5 | 🟠 Medium | Remediated | web-backend `7b343de` |
 | F6 | 🟡 Low | Open — prod verification | — |
-| F7 | 🟡 Low | Open — follow-up issue | — |
+| F7 | 🟡 Low | Remediated | web-backend `8142a21` |
 | F8 | 🟡 Low | Open — prod verification | — |
 
 ## 3. Remediation detail
@@ -54,6 +57,15 @@ Mechanism lives in the commits above; summarised here for the audit trail.
   (migration `V27`) via an atomic `INSERT ... ON CONFLICT DO NOTHING`; a `jti`
   already present is refused.
 - **F5 — SameSite.** The session cookie is issued with `SameSite=Lax`.
+- **F7 — rate limiting.** A `RateLimitFilter` throttles `/service/sso/tokens`
+  and `/auth/sso/exchange` (in-memory fixed window per path + client IP), running
+  ahead of the security chain so abuse is rejected with `429` before any auth or
+  DB work.
+- **F4 — mint trust boundary.** `mintToken` now refuses (403) unless the target
+  user has an `auth.line_identity` row, so a leaked service key can't bootstrap a
+  session for an arbitrary or never-linked user; every mint is audit-logged. Rate
+  limiting (F7) additionally blunts brute-forcing. Rotating the shared `/service`
+  key remains an ops recommendation.
 
 ## 4. Retest
 
@@ -67,18 +79,22 @@ retest against a running instance on the fix branch. Values below are scrubbed
 | F1 | SSO token presented as `Authorization: Bearer` to `GET /auth/me` | `200` + profile returned | `401` |
 | F2 | token in the deep link; inspect the web-app request log | `GET /sso?token=…` — token logged | `GET /sso` — no token (it rides in the `POST /sso/exchange` body) |
 | F3 | Same minted token exchanged twice at `POST /auth/sso/exchange` | `200`, `200` | `200`, `401` |
+| F4 | mint (`POST /service/sso/tokens`) for a user with no `auth.line_identity` row | token minted (success) | `403` (refused) |
 | F5 | `Set-Cookie` on exchange | no `SameSite` attribute | `SameSite=Lax` present¹ |
+| F7 | hammer `POST /service/sso/tokens` (limit set to 3 for the probe) | 25 requests, all pass the limiter (no `429`) | `429` from the 4th request on, before auth runs |
 
 ¹ `Secure` is also set in production (`cookie.secure=true`); it is absent only on
 the plain-HTTP local dev instance used for the retest.
 
-**Automated suite:** F1/F3/F5 are covered by `SsoSecurityTest` (web-backend);
-F2 by a chatbot test asserting the deep link uses the fragment. Each was written
-to fail before its fix and pass after. The full web-backend suite + ktlint, and
-the chatbot suite, pass on the fix branches (web-backend's pre-existing
-cross-surface identity e2e #126 included).
+**Automated suite:** F1/F3/F5 are covered by `SsoSecurityTest`, F2 by a chatbot
+test asserting the deep link uses the fragment, F7 by `RateLimitFilterTest`, and
+F4 by an `SsoServiceTest` case refusing a mint for an unlinked user. Each was
+written to fail before its fix and pass after. The full web-backend suite + ktlint, and the chatbot suite, pass on
+the fix branches (web-backend's pre-existing cross-surface identity e2e #126
+included).
 
-**Retest verdict:** F1, F3, F5 — **closed**.
+**Retest verdict:** F1, F2, F3, F4, F5, F7 — **closed** (F4's key-rotation
+residual aside). F6, F8 remain for prod verification.
 
 ## 5. Deferred findings → recommended follow-up
 
@@ -86,13 +102,13 @@ Tracked as sub-issues of #125 (see assessment report for full detail):
 
 | ID | Follow-up |
 | --- | --- |
-| F4 | Rate-limit and rotate the key for `/service/**` mint; consider scoping. |
 | F6 | Verify prod reverse-proxy handling of `x-forwarded-host`, or allowlist it. |
-| F7 | Rate-limit SSO mint and exchange. |
 | F8 | Verify prod CORS origin configuration; pin explicit origins. |
 
-Additionally recommended: an independent black-box pen-test on staging by a
-non-author, and a janitor to purge expired rows from `auth.sso_used_token`.
+Additionally recommended (ops): rotate the shared `/service` key periodically
+and keep it in a secret manager (residual of F4); an independent black-box
+pen-test on staging by a non-author; and a janitor to purge expired rows from
+`auth.sso_used_token`.
 
 ## Methodology & limitations
 
